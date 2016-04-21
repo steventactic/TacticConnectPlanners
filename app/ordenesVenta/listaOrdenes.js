@@ -292,16 +292,20 @@
 
           }else{
 
-            console.log("no exite ");
+            console.log("no existe ");
           }
       
          
          $scope.cadena = ""; 
+         if($scope.jsonListaOrdenes.idCliente === ''){
+            $scope.datos.activarCrearOrden = 0 ; 
+          }
          if ($scope.jsonListaOrdenes.idCliente != undefined ){
           $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id+'&id_cliente='+$scope.jsonListaOrdenes.idCliente ; 
 
          }else{
 
+             
           $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id ;   
          }
           console.log($scope.cadena);

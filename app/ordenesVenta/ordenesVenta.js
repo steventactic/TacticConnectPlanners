@@ -799,7 +799,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
 
 
         $scope.cargarConfiguracion = function (cliente,tipoServicio){
-              
+            console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+tipoServicio+'&id_cliente='+cliente)  
             $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+tipoServicio+'&id_cliente='+cliente)
               .success(function(data, status, headers, config){
                 //alert("**** SUCCESS ****");
@@ -818,7 +818,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                
                $scope.configuracionData= response.data;
               console.log("json cargado configuracion ===> " );
-              console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio+'&id_cliente='+$scope.jsonFacturacion.cliente);
+            //  console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio+'&id_cliente='+$scope.jsonFacturacion.cliente);
 
                console.log($scope.configuracionData) ; 
                console.log("-----------------------------------")

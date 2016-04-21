@@ -12,6 +12,8 @@ angular.module('myApp.editarOrden', ['ngRoute'])
 .controller('editarOrdenCtrl',  [ '$scope', '$http','datatable','$mdDialog','$mdMedia','$mdToast','$location','Scopes','$rootScope' , '$q',function($scope  , $http ,datatable ,  $mdDialog, $mdMedia , $mdToast ,$location ,Scopes  , $rootScope , $q) {
   Scopes.store('editarOrdenCtrl', $scope);
   $scope.mensajeServidor = []; 
+ 
+
 
   if(window.localStorage.getItem("usuario") === "" ||
     window.localStorage.getItem("clave") === "" ||
@@ -148,6 +150,19 @@ $scope.maquila = [
           });
 
     }
+
+    $scope.obtenerValorMascara = function (val) {                                              
+           return  '$ '+val.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1.');                                              
+        }; 
+
+
+        $scope.crearOrden = function (){
+
+        //$state.go('/ordenesVenta');
+        $location.path('/ordenesVenta');
+
+      }
+
         $scope.crearOrden = function (){
 
         //$state.go('/ordenesVenta');
@@ -158,6 +173,10 @@ $scope.maquila = [
 
         $rootScope.contarProductosPorUnidad = function (lineas){
               $rootScope.textoUnidadesProducto = "";
+              $scope.cantidadTotal = 0;
+              $scope.valorTotalLineas = 0;
+              $scope.valorTotalLineasTexto = "";
+              $scope.textosUnidades = [];
                     $scope.lineas = lineas ;
                     $scope.unidadesValores = [];
                        $scope.posicion = 0 ; 
@@ -199,20 +218,33 @@ $scope.maquila = [
                                                 // console.log(angular.toJson( $scope.unidadesValores, true));
                                                                                       
                                         }                            
-                                  }               
+                                  } 
+
+                                    $scope.cantidadTotal += $scope.lineas[i].cantidad ;               
+                                    if($scope.lineas[i].valorDeclaradoPorUnidad  != ""  || $scope.lineas[i].valorDeclaradoPorUnidad  != null || $scope.lineas[i].valorDeclaradoPorUnidad  != undefined  ){
+                                      $scope.valorTotalLineas += $scope.lineas[i].valorDeclaradoPorUnidad ; 
+
+                                    }
+                                    
                          }
+                             $scope.valorTotalLineasTexto = $scope.obtenerValorMascara($scope.valorTotalLineas) ;
 
                     
 
                          for (var i = 0 ; i < $scope.unidadesValores.length ; i++) {
-
-                           $rootScope.textoUnidadesProducto += $scope.unidadesValores[i].nombre + ":" + $scope.unidadesValores[i].cantidad + "," ;
+                            $rootScope.textoUnidadesProducto += $scope.unidadesValores[i].nombre + ":" + $scope.unidadesValores[i].cantidad + ", " ;
+                           
+                            $scope.jsonTempo  = {};
+                            $scope.jsonTempo.cantidad = $scope.unidadesValores[i].cantidad ;  
+                            $scope.jsonTempo.nombre = $scope.unidadesValores[i].nombre ;
+                            $scope.textosUnidades.push($scope.jsonTempo);               
                          }
 
-                         $rootScope.textoUnidadesProducto = $rootScope.textoUnidadesProducto.substr(0 , $rootScope.textoUnidadesProducto.length - 1 );
-                         //$scope.cantidadTotal += $scope.lineas[i].cantidad ; 
+                         $rootScope.textoUnidadesProducto = $rootScope.textoUnidadesProducto.substr(0 , $rootScope.textoUnidadesProducto.length - 2 );
+                        
                       
-                      
+                       console.log("array textos " ) ;
+                       console.log(  $scope.textosUnidades)  ;
                          console.log("texto completo   = " +  $rootScope.textoUnidadesProducto );
 
             }
@@ -311,8 +343,6 @@ $scope.maquila = [
   
      
 
-  
-
 
 
 
@@ -371,10 +401,12 @@ $scope.maquila = [
               
               $scope.jsonEdicion= response.data;
              
-              $scope.cargarProductosCliente($scope.jsonEdicion.datosFacturacion.cliente,$scope.jsonEdicion.datosFacturacion.tipoServicio);
+              
               // console.log("info de edicion == >" + $scope.jsonEdicion.datosFacturacion.nombre) ;
                console.log("llega a edicion ==>") ; 
                console.log(response.data) ;      
+
+               $scope.cargarProductosCliente($scope.jsonEdicion.datosFacturacion.cliente,$scope.jsonEdicion.datosFacturacion.tipoServicio);
 
                //verificar valor declarado 
                console.log("lineas");
@@ -570,19 +602,22 @@ $scope.maquila = [
                         console.log("Data combo");
                         console.log($scope.dataCombo);
                              /****************CArga tablas ***********************/
-                              
+                         
+
+
                       $scope.columnDefs= [
                                             {field:'numeroItem', displayName: 'Línea',visible: true , width : '5%',enableColumnResizing: false , enableCellEdit: false},
-                                            {field:'codigoProducto', displayName: 'Producto' ,visible: true , width : '35%',enableColumnResizing: false,enableCellEdit: true,editableCellTemplate: 'ui-grid/dropdownEditor'},   
-                                            {field:'cantidad', displayName: 'Cantidad' ,visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true,},                                                         
-                                            {field:'codigoUnidad', displayName: 'Unidad',visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true , editableCellTemplate: 'ui-grid/dropdownEditor',
+                                            {field:'codigoProducto', displayName: 'Producto' ,visible: true , width : '35%',enableColumnResizing: false,enableCellEdit: true,editableCellTemplate: 'ui-grid/dropdownEditor'  },   
+                                            {field:'cantidad', displayName: 'Cantidad' ,visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true, cellClass:'derecha' },                                                         
+                                            {field:'unidad', displayName: 'Unidad',visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true , editableCellTemplate: 'ui-grid/dropdownEditor',
                                                  editDropdownOptionsArray: [
-                                                { id: 'UNIDAD', value: 'UNIDAD' },
-                                                { id: 'BOLSA', value: 'BOLSA' }
-                                              ] },
+                                                { id: '1', value: 'UNIDAD' },                                                
+                                                { id: '2', value: 'CAJA' }
+                                              ] , cellFilter: 'medidaFilter:this' },
+                                            {field:'codigoUnidad', displayName: 'Nombre unidad',visible: false,enableColumnResizing: false,enableCellEdit: true},                                                            
                                             {field:'lote', displayName: 'Lote' ,visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true} ,                                                         
-                                            {field:'valorVenta', displayName: 'Valor venta',visible: true,enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'valorDeclaradoPorUnidad', displayName: 'Valor declarado',visible: true,enableColumnResizing: false,enableCellEdit: true},                                            
+                                            {field:'valorVenta', displayName: 'Valor venta',visible: false,enableColumnResizing: false,enableCellEdit: true ,cellClass:'derecha'},
+                                            {field:'valorDeclaradoPorUnidad', displayName: 'Valor venta',visible: true,enableColumnResizing: false,enableCellEdit: true ,cellFilter: 'currencyFilter:this'  ,cellClass:'derecha'  },                                         
                                             {field:'nombreProducto', displayName: 'Nombre producto',visible: false , width : '12%',enableColumnResizing: false,enableCellEdit: true},                                                            
                                             {field:'codigoUnidadAlterno', displayName: 'Unidad alterno',visible: false, width : '16%',enableColumnResizing: false,enableCellEdit: true},                                                      
                                             {field:'codigoBodega', displayName: 'Bodega' ,visible:false , width : '12%',enableColumnResizing: false,enableCellEdit: true}, 
@@ -595,8 +630,7 @@ $scope.maquila = [
                                             {field:'disponibilidad', displayName: 'Disponibilidad',visible: false,enableColumnResizing: false,enableCellEdit: true},                            
                                             {field:'idLineaOrden', displayName: 'Id linea orden' ,visible: false,enableColumnResizing: false,enableCellEdit: true},
                                             {field:'idOrden', displayName: 'Id  orden' ,visible: false,enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'idUsuario', displayName: 'Id  usuario' ,visible: false,enableColumnResizing: false,enableCellEdit: true},                                                                                         
-                                            {field:'nombreUnidad', displayName: 'Nombre unidad',visible: false,enableColumnResizing: false,enableCellEdit: true},                                                            
+                                            {field:'idUsuario', displayName: 'Id  usuario' ,visible: false,enableColumnResizing: false,enableCellEdit: true},                                                                                                                                     
                                             {field:'producto', displayName: 'producto',visible: false,enableColumnResizing: false,enableCellEdit: true},
                                             {field:'unidad', displayName: 'unidad',visible: false,enableColumnResizing: false,enableCellEdit: true},
                                             {field:'altoPorUnidad', displayName: 'alto unidad',visible: false,enableColumnResizing: false,enableCellEdit: true},
@@ -610,7 +644,11 @@ $scope.maquila = [
                                             {field:'codigoProductoAlterno', displayName: 'codigoProductoAlterno',visible: false,enableColumnResizing: false,enableCellEdit: true},
                                             {field:'nombreProductoAlterno', displayName: 'nombreProductoAlterno',visible: false,enableColumnResizing: false,enableCellEdit: true}
              
-                                          ];
+                                          ]
+
+
+                                 
+                                         
 
                       /*function rowTemplate() {
                                 return '<div ng-dblclick="grid.appScope.rowDblClick(row)" >' +
@@ -634,7 +672,7 @@ $scope.maquila = [
                                // var promise = $q.defer();
                             
                                console.log(rowEntity);
-                               var promise = $q.defer();
+                              var promise = $q.defer();
                                $scope.productoAddTabla = {};
                                $scope.productoAddTabla.linea = rowEntity.idLineaOrden,
                                $scope.productoAddTabla.producto = rowEntity.codigoProducto
@@ -645,9 +683,9 @@ $scope.maquila = [
                                $scope.productoAddTabla.valorDeclarado = rowEntity.valorDeclaradoPorUnidad;
 
                               console.log(angular.toJson( $scope.productoAddTabla, true));
-                                  promise.reject();
+                              promise.resolve(rowEntity);
 
-                            //    $scope.gridApi.rowEdit.setSavePromise( rowEntity, promise.promise );
+                              $scope.gridApi.rowEdit.setSavePromise( rowEntity, promise.promise );
                              
                                 // fake a delay of 3 seconds whilst the save occurs, return error if gender is "male"
                               
@@ -656,12 +694,8 @@ $scope.maquila = [
 
                          $scope.gridOptions.multiSelect = false;
                          $scope.gridOptions.onRegisterApi = function( gridApi ) {
-                                      $scope.gridApi = gridApi;
-                                   gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
-                                       console.log('edited row id:' + rowEntity.id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue );
-                                      $scope.$apply();
-                                    });
-                                    /// gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+                                    $scope.gridApi = gridApi;                                  
+                                    gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
                                 /*  $scope.gridApi.selection.on.rowSelectionChanged($scope, function(row){
                                       console.log("entra");
                                       console.log( row.entity.idOrden);
@@ -709,20 +743,23 @@ $scope.maquila = [
               // console.log($scope.jsonFacturacion.nombre);
         });    
    
-
+   
     $scope.addData = function() {
-    var n = $scope.gridOptions.data.length + 1;
+  
+    $scope.valorn = $scope.gridOptions.data.length + 1;
 
        $scope.gridOptions.data.push({
-                    "idLineaOrden":  n,
+                    "numeroItem":  $scope.valorn ,
                     "codigoProducto": "---" ,
                     "cantidad": "0",
                     "unidad": "UNIDAD",
                     "lote": "-",
-                    "valorVenta": "0",
-                    "valorDeclaradoPorUnidad": "0"
+                    "valorVenta": 0,
+                    "valorDeclaradoPorUnidad": 0
 
                   });
+
+       $scope.valorn = $scope.valorn + 1 ;
   };
   
 
@@ -1097,11 +1134,14 @@ $scope.maquila = [
               for (var i =0; i < $scope.productosCliente.length; i++) {
                  $scope.dataCombo= $scope.dataCombo.concat(
                                                             {
-                                                              id:$scope.productosCliente[i].codigo + $scope.productosCliente[i].nombre, 
-                                                              value :$scope.productosCliente[i].codigo + $scope.productosCliente[i].nombre
+                                                              id:$scope.productosCliente[i].codigo  , 
+                                                              value :   $scope.productosCliente[i].nombre
+
+                                                              
                                                             }
                                                         );
                }
+               $scope.gridOptions.columnDefs[1].editDropdownIdLabel  = 'value';
                $scope.gridOptions.columnDefs[1].editDropdownOptionsArray =   $scope.dataCombo;
           });    
         }
@@ -2704,5 +2744,48 @@ $scope.maquila = [
                    });  
              }
         }
-}]);
+}])
+
+
+
+.filter('currencyFilter', function () {
+
+  
+  return function (value, scope) {
+    
+      if(value === "" || value === null || value === undefined){    
+          return  '$ 0';
+      }else{    
+          return  '$ '+parseInt(value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1.');
+      }
+      
+    }
+})
+
+
+.filter('medidaFilter', function () {
+
+  
+  return function (value, scope) {
+      console.log("medida" + value ) ;
+      if(parseInt(value) == 1 ){    
+          return  'UNIDAD';
+      }  
+      if(parseInt(value) == 2 ){    
+          return  'CAJA';
+      }
+      
+    }
+})
 		
+.filter('productoFilter', function () {
+
+  
+  return function (value, scope) {
+
+    
+      return "pasa" ; 
+      
+    }
+})
+    

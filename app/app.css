@@ -30,6 +30,9 @@
 }
 
 
+.derecha {
+  text-align: right;
+} 
 
 .grid {
   width: 500px;
@@ -94,4 +97,5 @@ div {
     display: block;
 }
 Inherited from span
-.md-select-value 
+.md-select-value
+

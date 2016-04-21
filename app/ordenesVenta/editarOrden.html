@@ -42,8 +42,7 @@
                   </md-fab-actions>
               </md-fab-speed-dial>
 
-            <div style="width: 95%">
-            
+            <div style="width: 95%">            
       <md-toolbar>
 
                   <div class="md-toolbar-tools" >
@@ -179,7 +178,7 @@
                         <span
                             md-highlight-text="dest.searchText.nombre"
                             md-highlight-flags="i">
-                          {{ dest.nombre }}
+                          {{ dest.nombre }} - {{dest.numeroIdentificacion}}
                         </span>
                       </md-item-template>
                     </md-autocomplete>
@@ -198,41 +197,52 @@
                     <label>Numero identificación: {{jsonFacturacion.numeroIdentificacionAlternoDestinatario}} </label>
                   </div>
                
-                <div layout="row">  
-                  <!-- campo  numero documento-->
-                 <md-input-container class="md-block" flex-gt-sm>
-                    <label>Numero documento que acompaña la orden</label>
-                    <input ng-model="jsonFacturacion.numeroDocumentoOrdenCliente" >
-                </md-input-container>
+                <div layout="row" style="width: 100%;">  
+                        <div layout="column" style="width: 50%;"> 
+                       <!-- campo  nombre-->
+                       <md-input-container class="md-block" flex-gt-sm>
+                         <md-icon md-svg-src="img/city.svg" class="email"></md-icon>
+                          <label>Ciudad</label>
+                          <input ng-model="jsonFacturacion.ciudad" >
+                      </md-input-container>
+                       <!-- campo  telefonos-->
+                       <md-input-container class="md-block" flex-gt-sm>
+                         <md-icon md-svg-src="img/gps.svg" class="email"></md-icon>
+                          <label>Dirección</label>
+                          <input  ng-model="jsonFacturacion.direccion">
+                      </md-input-container>                
+                       <!-- campo  email-->
+                       <md-input-container class="md-block" flex-gt-sm>
+                         <md-icon md-svg-src="img/indicacionesDireccion.svg" class="email"></md-icon>
+                          <label>Indicaciones direccion</label>
+                          <input  ng-model="jsonFacturacion.indicaciones">
+                      </md-input-container>
+                     </div>
 
-                <md-input-container class="md-block" flex-gt-sm>
-                    <label>Direccion bill to</label>
-                    <input ng-model="jsonFacturacion.direccionBillTo" >
-                </md-input-container>
-                </div>
-            
-                <div layout="row">
-                <!-- campo  nombre-->
-                 <md-input-container class="md-block" flex-gt-sm>
-                   <md-icon md-svg-src="img/contacto.svg" class="email"></md-icon>
-                    <label>Nombre contacto</label>
-                    <input ng-model="jsonFacturacion.nombre" >
-                </md-input-container>
-                 <!-- campo  telefonos-->
-                 <md-input-container class="md-block" flex-gt-sm>
-                   <md-icon md-svg-src="img/telefono.svg" class="email"></md-icon>
-                    <label>Telefonos contacto</label>
-                    <input  ng-model="jsonFacturacion.telefonos">
-                </md-input-container>
-                 
+                <div layout="column" style="width: 50%;">
+                  <!-- campo  nombre-->
+                   <md-input-container class="md-block" flex-gt-sm>
+                     <md-icon md-svg-src="img/contacto.svg" class="email"></md-icon>
+                      <label>Nombre contacto</label>
+                      <input ng-model="jsonFacturacion.nombre" >
+                  </md-input-container>
+                   <!-- campo  telefonos-->
+                   <md-input-container class="md-block" flex-gt-sm>
+                     <md-icon md-svg-src="img/telefono.svg" class="email"></md-icon>
+                      <label>Telefonos contacto</label>
+                      <input  ng-model="jsonFacturacion.telefonos">
+                  </md-input-container>
+                   
 
-                 <!-- campo  email-->
-                 <md-input-container class="md-block" flex-gt-sm>
-                      <md-icon md-svg-src="img/email.svg" class="email"></md-icon>
-                    <label>Email contacto</label>
-                    <input  ng-model="jsonFacturacion.email">
-                </md-input-container>
+                   <!-- campo  email-->
+                   <md-input-container class="md-block" flex-gt-sm>
+                        <md-icon md-svg-src="img/email.svg" class="email"></md-icon>
+                      <label>Email contacto</label>
+                      <input  ng-model="jsonFacturacion.email">
+                  </md-input-container>
                 </div>
+                </div>
+           
                     <center>
                  <md-button md-no-ink class="md-raised md-primary" ng-click="finalizarEdicion()">Guardar</md-button>                 
             </center>
@@ -609,12 +619,25 @@
       <!-- Tab de  productos -->
        <md-tab label="Lineas"  ng-disabled="dataTabs.tabProductos">
         <md-content class="md-padding" >
+                  <div layout="row">
+                      <h4 style="width: 33%;"> Lineas : {{gridOptions.data.length}} </h4> 
+                      
+                      <h4 style="width: 33%;">Valor total lineas : {{valorTotalLineasTexto}}</h4>
+
+                      <h4 style="width: 33%;"> Cantidad  total : {{cantidadTotal}} </h4>
+                  </div>
+                  <div layout="row">
+                        <h4 style="width: 33%;" ng-repeat=" t in textosUnidades"> {{t.nombre}}: {{t.cantidad}} </h4> 
+
+                  </div>
+
+                
             
                  <md-toolbar>
                   <div class="md-toolbar-tools" >
                 
                     <h2>
-                      <span>Gestion de lineas,  {{textoUnidadesProducto}}</span>
+                      <span>Gestion de lineas</span>
                     </h2>
                     <span flex></span>
                  
@@ -624,7 +647,7 @@
                       </md-tooltip>
                       <md-icon md-svg-src="img/crear.svg"></md-icon>
                     </md-button>
-                    <!--  <md-button class="md-fab md-primary md-hue-2" aria-label="Agregar producto" ng-click="agregarLinea()">
+                      <!--<md-button class="md-fab md-primary md-hue-2" aria-label="Agregar producto" ng-click="agregarLinea()">
                        <md-tooltip md-direction="left">
                         Agregar linea de orden
                       </md-tooltip>
