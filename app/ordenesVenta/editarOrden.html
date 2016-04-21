@@ -1,0 +1,734 @@
+<div ng-cloak>
+  <md-content>
+    <div layout="row">
+                <md-fab-speed-dial  ng-if="login.mostrarMenu"
+                   style="left:0%  ;width: 5%" 
+                   md-open="true"
+                    md-direction="down" class="md-fling"
+                   >
+                  <md-fab-trigger>
+                          <md-button aria-label="menu" class="md-fab md-primary">
+                            <md-icon md-svg-src="img/interface.svg"></md-icon>
+                          </md-button>
+                   </md-fab-trigger>
+
+                   <md-fab-actions>
+                    <md-button aria-label="Gestion de ordenes" href="#/listaOrdenes" class="md-fab md-primary md-mini">
+                            <md-tooltip md-direction="right">
+                                Gestion de ordenes
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/arrows.svg" aria-label="Gestion de ordenes"></md-icon>
+                    </md-button>
+                    <md-button aria-label="Crear orden" href="#/ordenesVenta" class="md-fab md-primary md-mini" ng-click="crearOrden()">
+                            <md-tooltip md-direction="right">
+                                Crear orden
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/add-circular-outlined-button.svg" aria-label="Crear orden"></md-icon>
+                    </md-button>
+                    <md-button aria-label="Crear orden" href="#/cargue" class="md-fab md-primary md-mini"  >
+                            <md-tooltip md-direction="right">
+                                Cargue
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/delivery.svg" aria-label="Cargue"></md-icon>
+                    </md-button>
+                     <md-button aria-label="Crear orden" class="md-fab md-primary md-mini" ng-click="cerrarSesion()" >
+                            <md-tooltip md-direction="right">
+                                Cerrar sesion
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/cerrarSesion.svg" aria-label="Cerrar sesion"></md-icon>
+                    </md-button>
+                
+                  
+                  </md-fab-actions>
+              </md-fab-speed-dial>
+
+            <div style="width: 95%">
+            
+      <md-toolbar>
+
+                  <div class="md-toolbar-tools" >
+                
+                    <h2>
+                      <span>Editar  Orden: {{jsonFacturacion.nombreTipoServicio}} - Id orden - {{ordenSeleccionada.idOrden}}, numero documento - {{jsonFacturacion.numeroDocumentoOrdenCliente}}, Estado: {{jsonFacturacion.estadoOrdenType}}</span>
+                    </h2>
+                    <md-button class="md-fab md-primary md-hue-2 md-mini" aria-label="Crear orden" ng-click="showAdvancedMensajes()">
+                       <md-tooltip md-direction="right">
+                        Mensajes orden
+                      </md-tooltip>
+                      <md-icon md-svg-src="img/balloon.svg"></md-icon>
+                    </md-button>
+                    <span flex></span>
+                 
+                    <md-button class="md-fab md-primary md-hue-2" aria-label="Crear orden" ng-click="volver()">
+                       <md-tooltip md-direction="left">
+                        Volver
+                      </md-tooltip>
+                      <md-icon md-svg-src="img/back-arrow.svg"></md-icon>
+                    </md-button>
+                                        
+                   <!--   <md-button class="md-fab md-primary md-hue-2"  aria-label="Editar producto">
+                  <md-tooltip md-direction="left">
+                       Editar producto
+                      </md-tooltip>
+                      <md-icon md-svg-src="img/pencil.svg"></md-icon>
+                    </md-button>
+
+                    <md-button class="md-fab md-primary  md-hue-2" aria-label="Eliminar producto">
+                    <md-tooltip md-direction="left">
+                       Eliminar producto
+                      </md-tooltip>
+                      <md-icon md-svg-src="img/rubbish-bin.svg"></md-icon>
+                    </md-button>-->
+                  </div>
+                </md-toolbar>
+    <md-tabs md-dynamic-height md-border-bottom md-selected="dataTabs.tabSeleccionada"> 
+    <!--  Inicio Datos de facturacion-->
+      <md-tab label="Bill to" ng-disabled="dataTabs.tabFacturacion">
+      <md-content class="md-padding">
+             <!-- Combo de  Tipos de servicio -->
+                   <!-- <md-input-container class="md-block" flex-gt-sm>
+                        <label>Tipo servicio</label>
+                           <md-select ng-model="jsonFacturacion.tipoServicio" ng-change="cargaClientes()">
+                             <md-option ng-repeat="td in tipoServicioData" value="{{td .id}}">
+                              {{td.nombre}}
+                            </md-option>
+                          </md-select>
+                    </md-input-container>-->
+                       <!--  autocompletar de  tipo servicio-->
+                      <!--<md-autocomplete
+                      
+                          md-selected-item="app.selectedItem"
+                          md-search-text="app.searchText.nombre"
+                          md-items="app in tipoServicioData | filter:app.searchText.nombre"           md-item-text="jsonFacturacion.nombreTipoServicio"
+                          ng-model="app.searchText.nombre"                        
+                          placeholder="Seleccione  tipo de servicio..."    
+                          md-selected-item-change="cargaClientes(app.id)"                      
+                           >                 
+                         
+                      <md-item-template>
+                        <span
+                            md-highlight-text="app.searchText.nombre"
+                            md-highlight-flags="i">
+                          {{ app.nombre }} , {{ app.id }}
+                        </span>
+                      </md-item-template>
+                    </md-autocomplete>-->
+            <!-- Combo de  cliente -->
+            <!--  <md-input-container class="md-block"  flex-gt-sm>
+                        <label>Cliente</label>
+                           <md-select   ng-model="jsonFacturacion.cliente" ng-disabled="true"  ng-change="cargaSegmentos()">
+                             <md-option    ng-repeat="dest in clientes" value="{{dest.id}}">
+                              {{dest.nombre}}
+                            </md-option>
+                          </md-select>
+                    </md-input-container>-->
+                       <!--  autocompletar de  CLIENTE -->
+                    <!--  <br><br>
+                      <md-autocomplete
+                          md-selected-item="cli.selectedItem"
+                          md-search-text="cli.searchText.nombre"
+                          md-items="cli in clientes | filter:cli.searchText.nombre"           md-item-text="cli.nombre"                         
+                          placeholder="Seleccione cliente ..."                          
+                          md-selected-item-change="cargaSegmentos(cli.id)"      
+                          ng-model="jsonFacturacion.cliente"              
+                         >
+                      <md-item-template>
+                        <span
+                            md-highlight-text="cli.searchText.nombre"
+                            md-highlight-flags="i">
+                          {{ cli.nombre }}
+                        </span>
+                      </md-item-template>
+                    </md-autocomplete>-->
+                    <label>¿Quien solicita el servicio?</label>
+                    <br>
+              <!-- Combo de  segmento -->
+                   <md-input-container class="md-block" flex-gt-sm>
+                        <label>Segmento</label>
+                           <md-select ng-model="jsonFacturacion.segmento" ng-disabled="true"  ng-change="cargaDestinatarios()">
+                             <md-option>
+                              Cliente
+                            </md-option>
+                             <md-option ng-repeat="dest in segmento" value="{{dest.id}}">
+                              {{dest.nombre}} 
+                            </md-option>
+                          </md-select>
+                    </md-input-container>
+                   <!-- <label ng-if="mostrarAlternoBillToSegmento"> Codigo producto: {{jsonFacturacion.codigoAlternoSegmento}} </label>-->
+               <!-- Combo de  destinatario -->  
+                         
+                   <!-- <md-input-container class="md-block" flex-gt-sm>
+                        <label>Destinatario</label>
+                        <md-select ng-model="jsonFacturacion.destinatario" ng-change="cargaCiudadEnvio(0,0)">
+                             <md-option ng-repeat="dest in destinatario" value="{{dest.id}}">
+                              {{dest.nombre}} - {{dest.numeroIdentificacion}}
+                            </md-option>
+                          </md-select>
+                    </md-input-container>-->
+                    
+                    <md-autocomplete
+                          md-selected-item="dest.selectedItem"
+                          md-search-text="dest.searchText.nombre"
+                          md-items="dest in destinatario | filter:dest.searchText.nombre"           
+                          md-item-text="dest.nombre"                         
+                          placeholder="Seleccione destinatario ..."                          
+                          md-selected-item-change="cargaCiudadEnvio(dest.id , 1)"      
+                                      
+                         >
+                      <md-item-template>
+                        <span
+                            md-highlight-text="dest.searchText.nombre"
+                            md-highlight-flags="i">
+                          {{ dest.nombre }}
+                        </span>
+                      </md-item-template>
+                    </md-autocomplete>
+                    <br>
+
+
+                   <div ng-if="mostrarAlternoBillToDestinatario">
+                    <label >Codigo destinatario: {{jsonFacturacion.codigoAlternoDestinatario}} </label> 
+                 
+                  <br>
+                 
+                      <label>Nombre destinatario: {{jsonFacturacion.nombreAlternoDestinatario}} </label>
+                
+                  <br>
+                
+                    <label>Numero identificación: {{jsonFacturacion.numeroIdentificacionAlternoDestinatario}} </label>
+                  </div>
+               
+                <div layout="row">  
+                  <!-- campo  numero documento-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                    <label>Numero documento que acompaña la orden</label>
+                    <input ng-model="jsonFacturacion.numeroDocumentoOrdenCliente" >
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Direccion bill to</label>
+                    <input ng-model="jsonFacturacion.direccionBillTo" >
+                </md-input-container>
+                </div>
+            
+                <div layout="row">
+                <!-- campo  nombre-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                   <md-icon md-svg-src="img/contacto.svg" class="email"></md-icon>
+                    <label>Nombre contacto</label>
+                    <input ng-model="jsonFacturacion.nombre" >
+                </md-input-container>
+                 <!-- campo  telefonos-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                   <md-icon md-svg-src="img/telefono.svg" class="email"></md-icon>
+                    <label>Telefonos contacto</label>
+                    <input  ng-model="jsonFacturacion.telefonos">
+                </md-input-container>
+                 
+
+                 <!-- campo  email-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                      <md-icon md-svg-src="img/email.svg" class="email"></md-icon>
+                    <label>Email contacto</label>
+                    <input  ng-model="jsonFacturacion.email">
+                </md-input-container>
+                </div>
+                    <center>
+                 <md-button md-no-ink class="md-raised md-primary" ng-click="finalizarEdicion()">Guardar</md-button>                 
+            </center>
+
+                 <!--<md-button md-no-ink class="md-raised md-primary" ng-click="validaTabFacturacion()">Continuar a datos envio</md-button>-->
+
+
+        </md-content>              
+      </md-tab>
+      <!--   Datos de envio-->
+      <md-tab label="Ship to"  ng-if="tipoUbicacion == 'DIRECCION'">
+        <md-content class="md-padding">
+        <label>¿Donde necesita que sea entregado su pedido?</label>
+        <div layout="row">
+           <!-- Combo de  ciudad -->
+              <md-input-container class="md-block" flex-gt-sm>
+                        <label>Ciudad*</label>
+                           <md-select ng-model="jsonEnvio.ciudad" ng-change="cargaDestinosEnvio()">
+                            <md-option value="" > </md-option>
+                             <md-option ng-repeat="ciud in ciudad" value="{{ciud.id}}">
+                              {{ciud.nombreAlterno}}
+                            </md-option>
+                          </md-select>
+              </md-input-container>
+
+                     <md-input-container class="md-block" flex-gt-sm>
+                        <label>Destino*</label>
+                           <md-select ng-model="jsonEnvio.destino" ng-change="cargaInfoDestinoEnvio()">
+                            <md-option value="" > </md-option>
+                             <md-option ng-repeat="des in destino"  value="{{des.id}}">
+                              {{des.nombreAuxiliar}}
+                            </md-option>                              
+                          </md-select>                      
+              </md-input-container>
+             
+              <md-input-container>
+                <md-button class="md-fab md-mini md-primary" aria-label="agregar destino origen"  ng-click="showDestinoOrigen()">
+                   <md-icon md-svg-src="img/add-song.svg" style="color: greenyellow;"></md-icon>
+                </md-button>
+              </md-input-container>
+          </div>
+          <div layout="row">
+              <label style="width: 45%;">Dirección: {{jsonEnvio.direccion}}</label>
+                 <md-input-container class="md-block" flex-gt-sm>
+                    <label>Indicaciones dirección</label>
+                  <input type="text" style="color:black;"  ng-model="jsonEnvio.indicacionesDireccion">
+                </md-input-container>
+          </div>
+           <md-divider md-inset ></md-divider>
+          <br>
+          <label>¿Cuales son los datos de la persona de contacto?</label>
+          <div layout="row">
+                 <!-- campo  nombre-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                   <md-icon md-svg-src="img/contacto.svg" class="email"></md-icon>
+                    <label>Nombre de contacto</label>
+                    <input type="text" ng-model="jsonEnvio.nombre" >
+                </md-input-container>
+                  <!-- campo  telefonos-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                   <md-icon md-svg-src="img/telefono.svg" class="email"></md-icon>
+                    <label>Telefonos de contacto </label>
+                    <input type="text" ng-model="jsonEnvio.telefonos" >
+                </md-input-container>
+                  <!-- campo  email-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                     <md-icon md-svg-src="img/email.svg" class="email"></md-icon>
+                    <label>Email de contacto</label>
+                    <input type="email" ng-model="jsonEnvio.email">
+                </md-input-container>
+
+          </div>
+
+          <div layout="row">
+             <div layout="column" style="width: 50%">
+                <label>¿Cuando necesita que sea entregado?</label>
+                  <br>
+           
+
+                <md-radio-group  ng-model="data.info">
+                  
+                    <md-radio-button value="3"> No confirmado    </md-radio-button> 
+                    <md-radio-button value="1" >Rango de fechas   </md-radio-button>
+                    <md-radio-button value="0"> Fecha fija      </md-radio-button> 
+                             
+                </md-radio-group>
+
+              
+              <!--ENTREGAR PREFERIBLEMTEN-->
+              <div class="md-block" ng-if="data.info == 0">
+                 <label>Entregar preferiblemente</label>
+                <md-datepicker ng-model="jsonEntrega.fechaMaxima" md-placeholder="Enter date"></md-datepicker>
+              </div>
+              <!--Rango de fechas -->
+              <div class="md-block" ng-if="data.info == 1">
+                 <label>Desde</label>
+                <md-datepicker ng-model="jsonEntrega.fechaMinima" md-placeholder="Enter date"></md-datepicker>
+                 <label>Hasta</label>
+                <md-datepicker ng-model="jsonEntrega.fechaMaxima" md-placeholder="Enter date"></md-datepicker>
+              </div>    
+             </div>
+             <div layout="column" style="width: 50%">
+               <label>¿En qué horario?</label>
+               <div layout="row">
+                    <!-- Combo de  jornada -->
+              <md-input-container class="md-block" flex-gt-sm>
+                        <label>Jornada</label> 
+                        <md-select ng-model="jsonEntrega.jornada" ng-change="cargaHoras()">
+                             <md-option ng-repeat="des in jornadaEntrega" value="{{des.codigo}}">
+                              {{des.codigo}}
+                            </md-option>
+                        </md-select>
+              </md-input-container>
+
+               <!-- campo  hora minima-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                    <label>Hora minima</label>
+                    <input type="text" ng-model="jsonEntrega.horaMinima" >
+                </md-input-container>
+
+                 <!-- campo  hora maxima-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                    <label>Hora maxima</label>
+                    <input type="text" ng-model="jsonEntrega.horaMaxima" >
+                </md-input-container>
+               </div>
+             </div>
+
+          </div>
+          <br>
+          <md-divider md-inset ></md-divider>
+          <div layout="column">
+             
+            <!--<label>¿Qué requerimientos tiene este pedido?</label>-->
+               
+                       <!-- combo tipo forma  pago -->
+               <!-- <div layout="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                          <label>Tipo forma pago</label>
+                             <md-select ng-model="jsonOtros.tipoFormaPago">
+                             <md-option value="" > </md-option>
+                               <md-option ng-repeat="td in formasPago" value="{{td.id}}">
+                                   {{td.nombre}}
+                              </md-option> 
+                            </md-select>
+                      </md-input-container>
+                </div>-->
+              
+                    <label>Seleccione los requerimientos de entrega </label>
+                      <br>
+                       <md-input-container class="md-block" flex-gt-sm>      
+                          <div layout="row" layout-wrap flex>                        
+                       <div flex="25" ng-repeat="item in entregas">
+                        <md-checkbox ng-checked="exists(item.id, selected)"
+                       ng-click="toggle(item.id, selected)" >
+                          {{ item.nombre }} 
+                        </md-checkbox>
+                      </div>
+                      </div>
+                    </md-input-container>
+
+                  <label>Seleccione los requerimientos de maquila</label>
+                    <br>
+                        <md-input-container class="md-block" flex-gt-sm>      
+                          <div layout="row" layout-wrap flex>                        
+                       <div flex="25" ng-repeat="item in maquila">
+                        <md-checkbox ng-checked="exists1(item.id, selected1)"
+                       ng-click="toggle1(item.id, selected1)" >
+                          {{ item.nombre }} 
+                        </md-checkbox>
+                      </div>
+                      </div>
+                    </md-input-container>
+           
+              
+                     
+          </div>
+          <label>Notas</label>
+            <md-input-container class="md-block" flex-gt-sm>                    
+                         <input  type="textarea" ng-model="jsonOtros.notas" >
+            </md-input-container>
+            <center>
+                 <md-button md-no-ink class="md-raised md-primary" ng-click="finalizarEdicion()">Guardar</md-button>                 
+            </center>
+
+
+
+        <div>      
+              <div ng-if="mostrarAlternoShipToCiudad">
+                            
+                <label >Codigo ciudad: {{destinoOrigen.ciudadCodigoAlterno}} </label> 
+                <br>
+                <label >Nombre ciudad: {{destinoOrigen.ciudadNombreAlterno}} </label> 
+
+              </div>
+                 
+            <!-- Combo de  destino -->
+              <div layout-gt-sm="row">
+       
+            </div>
+            <div ng-if="mostrarAlternoShipToDestino">
+              <label >Codigo destino: {{destinoOrigen.destinoCodigoAlterno}} </label> 
+              <br>
+              <label >Nombre destino: {{destinoOrigen.destinoNombreAlterno}} </label> 
+             </div>
+                <!-- campo  direccion-->
+              <!--   <md-input-container class="md-block" flex-gt-sm>
+                    <label>Dirección</label>
+                  <input type="text" ng-disabled="true" style="color:black;" ng-model="jsonEnvio.direccion" >
+                </md-input-container>-->
+                  <!-- campo  indicadores direccion-->
+                <!-- <md-input-container class="md-block" flex-gt-sm>
+                    <label>Indicaciones dirección</label>
+                  <input type="text" ng-disabled="true" style="color:black;"  ng-model="jsonEnvio.indicacionesDireccion">
+                </md-input-container>-->
+                  <!-- campo  nombre-->
+                <!-- <md-input-container class="md-block" flex-gt-sm>
+                    <label>Nombre de contacto</label>
+                    <input type="text" ng-model="jsonEnvio.nombre" >
+                </md-input-container>-->
+                  <!-- campo  telefonos-->
+                <!-- <md-input-container class="md-block" flex-gt-sm>
+                    <label>Telefonos de contacto </label>
+                    <input type="text" ng-model="jsonEnvio.telefonos" >
+                </md-input-container>-->
+                  <!-- campo  email-->
+                 <!--<md-input-container class="md-block" flex-gt-sm>
+                    <label>Email de contacto</label>
+                    <input type="email" ng-model="jsonEnvio.email">
+                </md-input-container>-->
+
+                 <!--<md-button md-no-ink class="md-raised md-primary" ng-click="validaTabEnvio()">Continuar a datos entrega </md-button>-->
+        </md-content>
+      </md-tab>
+         <!--   Datos de envio bodega  ng-if="admiteBodegasDestino == 1" -->
+      <md-tab label="Ship to bodega" ng-if="tipoUbicacion == 'BODEGA'"  ng-show="false" ng-disabled="dataTabs.tabEnvio">
+        <md-content class="md-padding">
+           <!-- Combo de  ciudad -->
+              <md-input-container class="md-block" flex-gt-sm>
+                        <label>Ciudad</label>
+                           <md-select ng-model="jsonEnvio.ciudad" ng-change="cargaBodegasShiptToBodegas()">
+                           <md-option value="" > </md-option>
+                             <md-option ng-repeat="ciud in ciudad" value="{{ciud.id}}">
+                              {{ciud.nombreAlterno}}
+                            </md-option>
+                          </md-select>
+              </md-input-container>
+               <div ng-if="mostrarAlternoShipToBodegaCiudad">
+                            
+                <label >Codigo ciudad: {{bodegaDestinoOrigen.ciudadCodigoAlterno}} </label> 
+                <br>
+                <label >Nombre ciudad: {{bodegaDestinoOrigen.ciudadNombreAlterno}} </label> 
+
+              </div>
+              <!--  autocompletar de  Ciudad -->
+                      <!--<br><br>
+                      <md-autocomplete
+                          md-selected-item="ciu.selectedItem"
+                          md-search-text="ciu.searchText.nombre"
+                          md-items="ciu in ciudadShipTOBodega | filter:ciu.searchText.nombre"  md-item-text="ciu.nombre"                         
+                          placeholder="Seleccione ciudad..."                          
+                          md-selected-item-change="cargaBodegasShiptToBodegas(ciu.id)"  
+                           md-min-length="0" 
+                         >
+                      <md-item-template>
+                        <span
+                            md-highlight-text="ciu.searchText.nombre"
+                            md-highlight-flags="i">
+                          {{ ciu.nombreAlterno }}                          
+                        </span>
+                      </md-item-template>
+                    </md-autocomplete>-->
+
+
+            <!-- Combo de  destino -->
+              <!--<div layout-gt-sm="row">-->
+              <!--<md-input-container class="md-block" flex-gt-sm>
+                        <label>Destino</label>
+                           <md-select ng-model="jsonEnvio.destino" ng-change="cargaInfoDestinoEnvio()">
+                             <md-option ng-repeat="des in destino"  value="{{des.id}}">
+                              {{des.nombre}}
+                            </md-option>                              
+                          </md-select>                      
+              </md-input-container>-->
+
+              
+                      <br>
+   
+                     <md-input-container class="md-block" flex-gt-sm>
+                        <label>Bodega</label>
+                           <md-select ng-model="jsonEnvioShipTo.bodega" ng-change="asignoDestinatario()">
+                           <md-option value="" > </md-option>
+                             <md-option ng-repeat="td in bodegasShipToBodega" value="{{td.id}}">
+                              {{td.codigo}}-{{td.nombre}}
+                            </md-option>
+                          </md-select>
+                    </md-input-container>
+
+                <div ng-if="mostrarAlternoShipToDestinoBodega">
+                            
+                <label >Codigo bodega: {{bodegaDestinoOrigen.bodegaCodigoAlterno}} </label> 
+                <br>
+                <label >Nombre bodega: {{bodegaDestinoOrigen.bodegaNombreAlterno}} </label> 
+
+              </div>
+
+
+
+                 <!--<md-button md-no-ink class="md-raised md-primary" ng-click="validaTabEnvio()">Continuar a datos entrega </md-button>-->
+        </md-content>
+      </md-tab>
+      <md-tab label="Datos de entrega"  ng-if="false" >
+        <md-content class="md-padding">
+              <!-- Combo de  estado 
+              <md-input-container class="md-block" flex-gt-sm>
+                        <label>Estado</label>
+                           <md-select ng-model="jsonEntrega.estado">
+                             <md-option ng-repeat="des in estadoEntrega" value="{{des.id}}">
+                              {{des.texto}}
+                            </md-option>
+                          </md-select>
+              </md-input-container>-->
+                 <!-- campo  estado-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                    <label>Estado orden</label>
+                    <input ng-disabled="true"  style="color:black;" ng-model="jsonFacturacion.estadoOrdenType">
+                </md-input-container>
+
+              <!--Seleccionar  rangos -->
+              <p>Seleccion:</p>
+                <md-radio-group ng-model="data.info">
+                  <md-radio-button value="1" class="md-primary">Rango de fechas</md-radio-button>
+                  <md-radio-button value="0"> Fecha fija </md-radio-button> 
+                    <md-radio-button value="3"> No confirmado </md-radio-button>                   
+                </md-radio-group>
+              
+              <!--ENTREGAR PREFERIBLEMTEN-->
+              <div class="md-block" ng-if="data.info == 0">
+                 <label>Entregar preferiblemente</label>
+                <md-datepicker ng-model="jsonEntrega.fechaMaxima" md-placeholder="Enter date"></md-datepicker>
+              </div>
+              <!--Rango de fechas -->
+              <div class="md-block" ng-if="data.info == 1">
+                 <label>Desde</label>
+                <md-datepicker ng-model="jsonEntrega.fechaMinima" md-placeholder="Enter date"></md-datepicker>
+                 <label>Hasta</label>
+                <md-datepicker ng-model="jsonEntrega.fechaMaxima" md-placeholder="Enter date"></md-datepicker>
+              </div>
+              <!-- Combo de  jornada -->
+              <md-input-container class="md-block" flex-gt-sm>
+                        <label>Jornada</label> 
+                        <md-select ng-model="jsonEntrega.jornada" ng-change="cargaHoras()">
+                             <md-option ng-repeat="des in jornadaEntrega" value="{{des.codigo}}">
+                              {{des.codigo}}
+                            </md-option>
+                        </md-select>
+              </md-input-container>
+
+               <!-- campo  hora minima-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                    <label>Hora minima</label>
+                    <input type="text" ng-model="jsonEntrega.horaMinima" >
+                </md-input-container>
+
+                 <!-- campo  hora maxima-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                    <label>Hora maxima</label>
+                    <input type="text" ng-model="jsonEntrega.horaMaxima" >
+                </md-input-container>
+                <!--<md-button md-no-ink class="md-raised md-primary" ng-click="validaTabEntrega()">Continuar a productos</md-button>-->
+               
+        </md-content>
+      </md-tab>
+      <!-- Tab de  productos -->
+       <md-tab label="Lineas"  ng-disabled="dataTabs.tabProductos">
+        <md-content class="md-padding" >
+            
+                 <md-toolbar>
+                  <div class="md-toolbar-tools" >
+                
+                    <h2>
+                      <span>Gestion de lineas,  {{textoUnidadesProducto}}</span>
+                    </h2>
+                    <span flex></span>
+                 
+                    <md-button class="md-fab md-primary md-hue-2" aria-label="Agregar producto" ng-click="showNuevoProducto()">
+                       <md-tooltip md-direction="left">
+                        Crear producto
+                      </md-tooltip>
+                      <md-icon md-svg-src="img/crear.svg"></md-icon>
+                    </md-button>
+                    <!--  <md-button class="md-fab md-primary md-hue-2" aria-label="Agregar producto" ng-click="agregarLinea()">
+                       <md-tooltip md-direction="left">
+                        Agregar linea de orden
+                      </md-tooltip>
+                      <md-icon md-svg-src="img/add-circular-outlined-button.svg"></md-icon>
+                    </md-button>-->
+                      <md-button class="md-fab md-primary md-hue-2" aria-label="Agregar producto" ng-click="addData()">
+                       <md-tooltip md-direction="left">
+                        Agregar linea de orden EN TABLA
+                      </md-tooltip>
+                      <md-icon md-svg-src="img/add-circular-outlined-button.svg"></md-icon>
+                    </md-button>
+                                        
+                    <md-button  ng-if="mostrarEditar != 0" class="md-fab md-primary md-hue-2"  aria-label="Editar producto" ng-click="editarLinea()">
+                    <md-tooltip md-direction="left">
+                       Editar producto
+                      </md-tooltip>
+                      <md-icon md-svg-src="img/pencil.svg"></md-icon>
+                    </md-button>
+
+                    <md-button  ng-if="mostrarEliminar != 0"class="md-fab md-primary  md-hue-2" aria-label="Eliminar producto" ng-click="eliminarLinea()">
+                    <md-tooltip md-direction="left">
+                       Eliminar producto
+                      </md-tooltip>
+                      <md-icon md-svg-src="img/rubbish-bin.svg"></md-icon>
+                    </md-button>
+                  </div>
+                </md-toolbar>
+                  <!--<table  border=1  style="width:100%;height:80%;">
+                        <tr>
+                          <td><strong>Producto</strong></td>
+                          <td><strong>Bodega</strong></td>
+                          <td><strong>cantidad</strong></td>
+                          <td><strong>unidad</strong></td>
+                          <td><strong>lote</strong></td>
+                          <td><strong>notas</strong></td>
+                        </tr>
+                         <tr ng-repeat=" pro  in productosTemporales">
+                          <td>{{pro.producto}}</td>
+                          <td>{{pro.bodega}}</td>
+                          <td>{{pro.cantidad}}</td>
+                          <td>{{pro.unidad}}</td>
+                          <td>{{pro.lote}}</td>
+                          <td>{{pro.notas}}</td>
+                        </tr> ui-grid-selection
+                  </table>-->
+              <div ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav  style="width:100%;height:400px;" class="grid">
+                <div class="watermark" ng-show="!gridOptions.data.length">No se encontraron resultados</div>    
+                </div>
+                     <center>
+                      <md-button md-no-ink class="md-raised md-primary" ng-click="finalizarEdicion()">Guardar</md-button>                 
+                      </center>
+
+                <!--
+                <div class="container-fluid">
+                  <div class="row">                      
+                      <div ng-controller="ordenesVentaCtrl">
+                          <div class="col-md-12 col-lg-12" ultimate-datatable="datatable">
+                          </div>
+                      </div>
+                  </div>
+                </div>-->
+       
+
+        </md-content>
+          
+      </md-tab>
+      <!-- Tab de  productos -->
+       <md-tab label="Resumen"   >
+            <md-content>
+
+                  
+              <center>
+                  <md-button md-no-ink class="md-raised md-primary" ng-click="finalizarEdicion()">Guardar</md-button>
+
+                 <md-button md-no-ink class="md-raised md-primary" ng-click="finalizarAceptacion()">Aceptar</md-button>                    
+              </center>
+                     
+            </md-content>
+       </md-tab>
+       <!--<md-tab label="Soportes documentales"  ng-disabled="dataTabs.tabSoportesDocumentales">
+        <md-content class="md-padding">
+         <md-card ng-repeat="req in requerimientosDocumentales">
+        <md-card-title>
+          <md-card-title-text>
+               <span class="md-headline">{{req.nombre}}</span>
+                        <span class="md-subhead">{{req.textoPreguntaRequerimientoDeCumplimiento}}</span>
+          </md-card-title-text>
+          <md-card-title-media>
+            <div class="md-media-sm card-media"></div>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+         
+                    <input id="fileInput" type="file"/>
+        </md-card-actions>
+      </md-card>
+           
+
+
+             <md-button md-no-ink class="md-raised md-primary" ng-click="volver()">Finalizar</md-button>
+        </md-content>
+      </md-tab>-->
+        </md-tabs>
+      </div>
+    </div>
+  </md-content>
+</div>

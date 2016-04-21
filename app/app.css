@@ -1,0 +1,97 @@
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
+
+
+
+.grid {
+  width: 500px;
+  height: 250px;
+  
+}
+.watermark {
+    position: absolute;
+    top: 50%;                    <---- Center vertically in the parent element,
+    transform: translateY(-50%); <---- it works for any parent height
+    opacity: 0.25;
+    font-size: 2em;
+    width: 100%;
+    text-align: center;
+    z-index: 1000;
+}
+
+
+.fabSpeedDialdemoBasicUsage .text-capitalize {
+  text-transform: capitalize; }
+.fabSpeedDialdemoBasicUsage .md-fab:hover, .fabSpeedDialdemoBasicUsage .md-fab.md-focused {
+  background-color: #000 !important; }
+.fabSpeedDialdemoBasicUsage p.note {
+  font-size: 1.2rem; }
+.fabSpeedDialdemoBasicUsage .lock-size {
+  min-width: 300px;
+  min-height: 300px;
+  width: 300px;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto; }
+
+
+
+
+.cls
+
+
+element.style {
+}
+.md-select-value :first-child {
+     color:black;
+    -webkit-flex: 1 0 auto;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    -webkit-transform: translate3d(0,2px,0);
+    transform: translate3d(0,2px,0);
+}
+.md-select-value .md-text {
+    display: inline;
+}
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+Inherited from span
+.md-select-value 

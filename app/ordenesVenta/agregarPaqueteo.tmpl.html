@@ -1,0 +1,240 @@
+<md-dialog style="width:60%;height:80%;"  ng-cloak >
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Agregar Paqueteo</h2>
+        <span flex></span>
+       
+      </div>
+    </md-toolbar>
+    <md-dialog-content >
+            <md-content class="md-padding">
+             <!-- Combo de  Tipos de servicio -->
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Linea</label>
+                           <md-select ng-model="jsonPaqueteo.linea" ng-change="cargaClientes()">
+                             <md-option ng-repeat="td in tipoServicioData" value="{{td .id}}">
+                              {{td.nombre}}
+                            </md-option>
+                          </md-select>
+                    </md-input-container>
+                <fieldset class="standard" >
+                    <legend>Declaracion de contenido</legend>
+             <!-- campo  numero de paquetes-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                    <label>Numero de paquetes</label>
+                    <input type="number" ng-model="jsonPaqueteo.numeroPaquetes" >
+                </md-input-container>   
+
+                 <!-- campo  descripcion de contenido-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                    <label>Descripcion de contenido</label>
+                    <input type="number" ng-model="jsonPaqueteo.numeroPaquetes" >
+                </md-input-container>              
+
+                <!--  lista de tipo de mercancia -->      
+                      <fieldset class="standard" >
+                        <legend>Tipos de mercancia </legend>
+                        <div layout="row" layout-wrap flex>
+                          <div flex="50" ng-repeat="item in items">
+                            <md-checkbox >
+                              {{ item }} <span ng-if="exists(item, selected)">selected</span>
+                            </md-checkbox>
+                          </div>
+                        </div>
+                      </fieldset>
+
+                      <!-- informcion de productos -->
+                    <fieldset class="standard" >
+                      <legend>Medidas </legend>
+                        <div layout="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                                <label>Alto cm</label>
+                                <input type="number" ng-model="jsonPaqueteo.alto" >
+                            </md-input-container>    
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Largo cm</label>
+                                <input type="number" ng-model="jsonPaqueteo.largo" >
+                            </md-input-container>    
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Ancho cm</label>
+                                <input type="number" ng-model="jsonPaqueteo.ancho" >
+                            </md-input-container>    
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Volumen</label>
+                                <input type="number" ng-model="jsonPaqueteo.volumen" >
+                            </md-input-container>   
+                             <md-input-container class="md-block" flex-gt-sm>
+                                <label>Total</label>
+                                <input type="number" ng-model="jsonPaqueteo.total" >
+                            </md-input-container>   
+                        </div>
+                         <div layout="row">
+                            <span flex></span>
+                            <span flex></span>
+                            <span flex></span>  
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Peso kg</label>
+                                <input type="number" ng-model="jsonPaqueteo.peso" >
+                            </md-input-container>   
+                             <md-input-container class="md-block" flex-gt-sm>
+                                <label>Total</label>
+                                <input type="number" ng-model="jsonPaqueteo.totalKilos" >
+                            </md-input-container>   
+                        </div>
+                        <div layout="row">
+                            <span flex></span>
+                            <span flex></span>
+                            <span flex></span>  
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Peso Vol</label>
+                                <input type="number" ng-model="jsonPaqueteo.peso" >
+                            </md-input-container>   
+                             <md-input-container class="md-block" flex-gt-sm>
+                                <label>Total</label>
+                                <input type="number" ng-model="jsonPaqueteo.totalVolumen" >
+                            </md-input-container>   
+                        </div>
+                        <div layout="row">
+                            <span flex></span>
+                            <span flex></span>
+                            <span flex></span>  
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Valor declarado</label>
+                                <input type="number" ng-model="jsonPaqueteo.valorDeclarado" >
+                            </md-input-container>   
+                             <md-input-container class="md-block" flex-gt-sm>
+                                <label>Total</label>
+                                <input type="number" ng-model="jsonPaqueteo.totalKDeclarado" >
+                            </md-input-container>   
+                        </div>
+                    </fieldset>
+
+                      <!-- Combo de  origenes  -->
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Origenes</label>
+                           <md-select ng-model="jsonPaqueteo.origenes" ng-change="cargaClientes()">
+                             <md-option ng-repeat="td in d" value="{{td .id}}">
+                              {{td.nombre}}
+                            </md-option>
+                          </md-select>
+                    </md-input-container>
+
+
+                      <!-- Combo de  origenes  -->
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Ciudad</label>
+                           <md-select ng-model="jsonPaqueteo.origenes" ng-change="cargaClientes()">
+                             <md-option ng-repeat="td in e" value="{{td .id}}">
+                              {{td.nombre}}
+                            </md-option>
+                          </md-select>
+                    </md-input-container>
+                        <!--  autocompletar de  bodega-->
+                      <div layout="row">                                           
+                        <md-autocomplete style="width: 95%";
+                            md-selected-item="bodegas.selectedItem"
+                            md-search-text="bodegas.searchText.nombre"
+                            md-items="bodegas in bodegasProducto | filter:bodegas.searchText.nombre"    md-item-text="bodegas.nombre"                         
+                            placeholder="Seleccione bodega..."                          
+                            md-selected-item-change="cargaValorBodega(bodegas.id)"                   
+                           >
+                        <md-item-template>
+                          <span
+                              md-highlight-text="bodegas.searchText.nombre"
+                              md-highlight-flags="i">
+                                {{bodegas.codigo}},  {{bodegas.nombre}}                       
+                          </span>
+                        </md-item-template>
+                      </md-autocomplete>
+
+                        <md-button class="md-fab md-mini md-primary" aria-label="Use Android">
+                           <md-icon md-svg-src="img/add-song.svg" style="color: greenyellow;"></md-icon>
+                        </md-button>
+                      
+                     </div>
+
+                     <fieldset class="standard" >
+                      <legend>Informacion general </legend>
+                        <div layout="row">
+                               <!-- campo codigo-->
+                               <md-input-container style="width: 25%;" class="md-block" flex-gt-sm>
+                                  <label>Codigo</label>
+                                  <input type="number" ng-model="jsonPaqueteo.codigo" >
+                              </md-input-container>     
+                              <md-input-container  style="width: 75%;" lass="md-block" flex-gt-sm>
+                                  <label>Nombre</label>
+                                  <input type="text" ng-model="jsonPaqueteo.nombre" >
+                              </md-input-container>     
+                        </div>
+                         <div layout="row">
+                               <!-- campo codigo-->
+                               <md-input-container style="width: 25%;" class="md-block" flex-gt-sm>
+                                  <label>Codigo Alterno</label>
+                                  <input type="number" ng-model="jsonPaqueteo.codigoAlterno" >
+                              </md-input-container>     
+                              <md-input-container  style="width: 75%;" lass="md-block" flex-gt-sm>
+                                  <label>Nombre Alterno</label>
+                                  <input type="text" ng-model="jsonPaqueteo.nombreAlterno" >
+                              </md-input-container>     
+                        </div>
+                        <div layout="row">
+                            <md-input-container   lass="md-block" flex-gt-sm>
+                              <label>Ciudad</label>
+                              <input type="text" ng-model="jsonPaqueteo.ciudadContacto" >
+                           </md-input-container>    
+                        </div>
+                        <div layout="row">
+                           <md-input-container   lass="md-block" flex-gt-sm>
+                                    <label>Direccion</label>
+                                    <input type="text" ng-model="jsonPaqueteo.ciudadContacto" >
+                           </md-input-container>   
+                        </div> 
+                        <div layout="row">
+                            <md-input-container   lass="md-block" flex-gt-sm>
+                                  <label>Indicaciones</label>
+                                  <input type="text" ng-model="jsonPaqueteo.ciudadContacto" >
+                            </md-input-container>     
+                        </div>
+                        <fieldset class="standard" >
+                          <legend>Contacto</legend>                                                
+                            <div layout="row">
+                              <md-input-container  lass="md-block" flex-gt-sm>
+                                      <label>nombre</label>
+                                      <input type="text" ng-model="jsonPaqueteo.ciudadContacto" >
+                             </md-input-container>  
+                            </div>
+                             <div layout="row">
+                               <md-input-container  lass="md-block" flex-gt-sm>
+                                        <label>Telefono</label>
+                                        <input type="text" ng-model="jsonPaqueteo.ciudadContacto" >
+                               </md-input-container>   
+                             </div>
+                             <md-input-container   lass="md-block" flex-gt-sm>
+                                      <label>Email</label>
+                                      <input type="text" ng-model="jsonPaqueteo.ciudadContacto" >
+                             </md-input-container>    
+
+                        </fieldset>
+                    </fieldset>
+                        
+                          
+      <br><br>
+           
+
+             <md-button md-no-ink class="md-raised md-primary" ng-click="volver()">Finalizar</md-button>
+        </md-content>
+    
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+     
+      <span flex></span>
+      <md-button ng-click="cerrarModal()">
+       Cancelar
+      </md-button>
+      <md-button ng-click="agregarProductoTemporal()" style="margin-right:20px;">
+       Agregar
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

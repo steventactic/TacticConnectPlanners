@@ -1,0 +1,129 @@
+<div ng-cloak>
+<md-content>
+        <div layout="row">
+                <md-fab-speed-dial  ng-if="login.mostrarMenu"
+                   style="left:0%  ;width: 5%" 
+                   md-open="true"
+                    md-direction="down" class="md-fling"
+                   >
+                  <md-fab-trigger>
+                          <md-button aria-label="menu" class="md-fab md-primary">
+                            <md-icon md-svg-src="img/interface.svg"></md-icon>
+                          </md-button>
+                   </md-fab-trigger>
+
+                   <md-fab-actions>
+                    <md-button aria-label="Gestion de ordenes" href="#/listaOrdenes" class="md-fab md-primary md-mini">
+                            <md-tooltip md-direction="right">
+                                Gestion de ordenes
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/arrows.svg" aria-label="Gestion de ordenes"></md-icon>
+                    </md-button>
+                  
+                       <md-button aria-label="Crear orden" href="#/cargue" class="md-fab md-primary md-mini"  >
+                            <md-tooltip md-direction="right">
+                                Cargue
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/delivery.svg" aria-label="Cargue"></md-icon>
+                    </md-button>
+                     <md-button aria-label="Crear orden" href="#/corteDicermex" class="md-fab md-primary md-mini"  >
+                            <md-tooltip md-direction="right">
+                                Corte Dicermex
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/cut.svg" aria-label="Cargue"></md-icon>
+                    </md-button>
+                      <md-button aria-label="Crear orden" href="#/moviles" class="md-fab md-primary md-mini"  >
+                            <md-tooltip md-direction="right">
+                               Moviles
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/transport.svg" aria-label="Cargue"></md-icon>
+                    </md-button>
+                     <md-button aria-label="Crear orden" class="md-fab md-primary md-mini" ng-click="cerrarSesion()" >
+                            <md-tooltip md-direction="right">
+                                Cerrar sesion
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/cerrarSesion.svg" aria-label="Cerrar sesion"></md-icon>
+                    </md-button>
+                
+                  
+                  </md-fab-actions>
+              </md-fab-speed-dial>
+
+            <div style="width: 94%">
+                      <md-toolbar>
+                        <div class="md-toolbar-tools" >
+                        
+                          <h2>
+                            <span>Cargue archivos excel </span>
+                          </h2>
+                       </div>
+                     </md-toolbar>
+                    
+                      <br>
+                      <textarea  ng-model="data.texto"  rows="15" class="form-control" placeholder="Pegar texto aqui" ng-change="contarFacturas()" required="" autofocus="">      </textarea> 
+                      <br>   
+                      <br>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Cantidad de registros</label>
+                    <input ng-disabled="true"  style="color:black;" ng-model="data.cantidadFacturas ">
+                </md-input-container>  
+                    <center ng-if="dataMatch.length > 0 ">
+                      <table border="1">
+                      <col width="20%">
+                      <col width="20%">
+                      <col width="20%">
+                        <tr>
+                          <td><center><strong>Id</strong></center></td>
+                          <td><center><strong>Esperado</strong></center></td>
+                          <td><center><strong>Recibido</strong></center></td>
+                          <td><center><strong>Asignar</strong></center></td>
+                        </tr>
+                         <tr ng-repeat="d  in dataMatch">
+                          <td><center>{{$index + 1 }}</center></td>
+                          <td><center>{{d.nombre}}</center></td>
+                           <td><center>{{d.recibido}}</center></td>
+                          <td> 
+                              <md-input-container class="md-block"  flex-gt-sm>
+                                <label>Seleccionar</label>
+                                   <md-select  ng-model="jsonData.valorCombo"   ng-change="refrescarCombos(d.nombre ,$index)" >
+                                     <md-option    ng-repeat="dest in dataNoMatch" value="{{dest.nombre}}">
+                                      {{dest.nombre}}
+                                    </md-option>
+                                  </md-select>
+                            </md-input-container>
+                        </td>
+                        </tr>
+                     </table>
+
+                   </center>
+                   <!-- <div ng-repeat="d  in dataMatch">
+                      <div layout="row">
+                     
+                         <h3>{{$index}} --- {{d.nombre}}---</h3>
+                        <md-input-container class="md-block"  flex-gt-sm>
+                            <label>Asignar</label>
+                               <md-select   ng-model="jsonFacturacion.cliente"  >
+                                 <md-option    ng-repeat="dest in dataNoMatch" value="{{dest.nombre}}">
+                                  {{dest.nombre}}
+                                </md-option>
+                              </md-select>
+                        </md-input-container>
+                      
+                      </div>
+                    </div>-->
+
+                  <md-button md-no-ink class="md-raised  md-primary btn-block"   ng-click="envioData()">Enviar </md-button>
+                  <br>
+                  <br>
+                  <textarea  ng-disabled="true"  rows="15" class="form-control" placeholder="Respuesta" required="" autofocus=""></textarea> 
+                
+                
+
+
+           </div>
+
+      
+        </div>
+</md-content>
+      
+</div>

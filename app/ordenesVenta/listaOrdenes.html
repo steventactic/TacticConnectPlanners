@@ -1,0 +1,178 @@
+<div ng-cloak>
+        <md-content>            
+            <div layout="row">
+                 <md-fab-speed-dial  ng-if="login.mostrarMenu"
+                   style="left:0%  ;width: 5%" 
+                   md-open="true"
+                    md-direction="down" class="md-fling"
+                   >
+                  <md-fab-trigger>
+                          <md-button aria-label="menu" class="md-fab md-primary">
+                            <md-icon md-svg-src="img/interface.svg"></md-icon>
+                          </md-button>
+                   </md-fab-trigger>
+
+                   <md-fab-actions>
+                    <md-button aria-label="Gestion de ordenes" href="#/listaOrdenes" class="md-fab md-primary md-mini">
+                            <md-tooltip md-direction="right">
+                                Gestion de ordenes
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/arrows.svg" aria-label="Gestion de ordenes"></md-icon>
+                    </md-button>
+                    <!--<md-button aria-label="Crear orden" href="#/ordenesVenta" class="md-fab md-primary md-mini" ng-click="crearOrden()">
+                            <md-tooltip md-direction="right">
+                                Crear orden
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/add-circular-outlined-button.svg" aria-label="Crear orden"></md-icon>
+                    </md-button>-->
+                    <md-button aria-label="Crear orden" href="#/cargue" class="md-fab md-primary md-mini"  >
+                            <md-tooltip md-direction="right">
+                                Cargue
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/delivery.svg" aria-label="Cargue"></md-icon>
+                    </md-button>
+                     <md-button aria-label="Crear orden" href="#/corteDicermex" class="md-fab md-primary md-mini"  >
+                            <md-tooltip md-direction="right">
+                                Corte Dicermex
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/cut.svg" aria-label="Cargue"></md-icon>
+                    </md-button>
+                      <md-button aria-label="Crear orden" href="#/moviles" class="md-fab md-primary md-mini"  >
+                            <md-tooltip md-direction="right">
+                               Moviles
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/transport.svg" aria-label="Cargue"></md-icon>
+                    </md-button>
+                     <md-button aria-label="Crear orden" class="md-fab md-primary md-mini" ng-click="cerrarSesion()" >
+                            <md-tooltip md-direction="right">
+                                Cerrar sesion
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/cerrarSesion.svg" aria-label="Cerrar sesion"></md-icon>
+                    </md-button>
+                
+                  
+                  </md-fab-actions>
+              </md-fab-speed-dial>
+
+            <div style="width: 95%">
+              
+
+           
+                <md-toolbar>
+                      <div class="md-toolbar-tools" style="width: 100%">
+                      
+                        <h2>
+                          <span>Gestion de Ordenes</span>
+                        </h2>
+                                        
+                       <span flex></span>
+                          <md-switch ng-model="datos.verOpciones"  aria-label="Switch 2" ng-true-value="true" ng-false-value="false"  class="md-fab">
+                                Ver opciones
+                          </md-switch>
+                      </div>
+                    </md-toolbar>
+                       <div ng-show="datos.verOpciones" class="md-toolbar-tools" style="width: 100%">
+                    
+                            <h2>
+                              <span>Opciones busqueda</span>
+                            </h2>
+                    
+                                
+
+                           <span flex></span>
+                              <md-button   class="md-fab md-primary  md-mini md-hue-2" aria-label="refrecar" ng-click="cargarOrdenes()">
+                               <md-tooltip md-direction="left">
+                                Refrescar
+                              </md-tooltip>
+                              <md-icon md-svg-src="img/update-arrows.svg"></md-icon>
+                            </md-button>
+                             <!-- Combo de  Tipos de servicio -->
+                          <md-input-container class="md-block" flex-gt-sm>
+                                <label style="color:white;">Estado de la orden</label>
+                                   <md-select ng-model="jsonListaOrdenes.estadoOrden" ng-change="cargarOrdenes()">
+                                     <md-option ng-repeat="td in estadoOrden" value="{{td.id}}">
+                                      {{td.nombre}}
+                                    </md-option>
+                                  </md-select>
+                            </md-input-container>
+                               
+                               
+                               <!-- Combo de  Tipos de servicio -->
+                          <md-input-container class="md-block" flex-gt-sm>
+                                <label style="color:white;">Cliente</label>
+                                <md-select ng-model="jsonListaOrdenes.idCliente" ng-change="cargarOrdenes()">
+                                <md-option value="">TODOS</md-option>
+                                     <md-option ng-repeat="td in clientes" value="{{td.id}}">
+                                      {{td.nombre}}
+                                    </md-option>
+                                  </md-select>
+                            </md-input-container>
+
+                              <!-- Combo de  Tipos de servicio -->
+                          <md-input-container class="md-block" flex-gt-sm>
+                                <label style="color:white;">Tipo servicio</label>
+                                <md-select ng-model="jsonListaOrdenes.idServicio" ng-change="cargarOrdenes()">
+                                     <md-option ng-repeat="td in tipoServicioData" value="{{td.id}}">
+                                      {{td.nombre}}
+                                    </md-option>
+                                  </md-select>
+                            </md-input-container>
+
+
+                            <!-- Autocompletar de  clientes -->
+                               <!--<md-autocomplete
+                                  md-selected-item="cli.selectedItem"
+                                  md-search-text="cli.searchText.nombre"
+                                  md-items="cli in clientes | filter:cli.searchText.nombre"            md-item-text="cli.nombre"                         
+                                  placeholder="Seleccione cliente ..."                          
+                                  md-selected-item-change="setidCliente(cli.id)"                  >
+                              <md-item-template>
+                                <span
+                                    md-highlight-text="cli.searchText.nombre"
+                                    md-highlight-flags="i">
+                                  {{ cli.nombre }}
+                                </span>
+                              </md-item-template>
+                            </md-autocomplete>-->
+                          
+                            <md-button ng-if="datos.activarCrearOrden == 1" class="md-fab md-primary md-hue-2" aria-label="Crear orden" ng-click="crearOrden()">
+                               <md-tooltip md-direction="left">
+                                Crear orden
+                              </md-tooltip>
+                              <md-icon md-svg-src="img/add-circular-outlined-button.svg"></md-icon>
+                            </md-button>
+                             <md-button   ng-if="datos.seleccionado == '0'" class="md-fab md-primary md-hue-2" ng-click="cargarEdicion()" aria-label="Editar producto">
+                          <md-tooltip md-direction="left">
+                               Editar orden
+                              </md-tooltip>
+                              <md-icon md-svg-src="img/pencil.svg"></md-icon>
+                            </md-button>
+                                                
+                          
+                      </div>
+
+
+               <!--     <div class="container-fluid">
+                      <div class="row">                      
+                          <div ng-controller="listaOrdenesCtrl">
+                              <div class="col-md-12 col-lg-12" ultimate-datatable="datatable">
+                              </div>
+                          </div>
+                      </div>
+                    </div>   -->
+               
+                       <!--<div  style="width:100%;height:80%;" id="grid1" ui-grid="{ data: datatableData }" class="grid"></div>-->
+                  
+                  <div ui-grid="gridOptions"   style="width:99%;height:550px;" ui-grid-selection class="grid">
+                    <div class="watermark" ng-show="!gridOptions.data.length">No se encontraron resultados</div>
+
+                  </div>
+          
+
+           </div>
+
+      
+        </div>
+
+  </md-content>
+</div>

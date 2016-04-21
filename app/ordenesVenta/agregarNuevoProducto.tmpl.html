@@ -1,0 +1,341 @@
+<md-dialog style="width:50%;height:70%;"  ng-cloak >
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Agregar nuevo producto</h2>
+        <span flex></span>
+        
+       
+      </div>
+    </md-toolbar>
+    <md-dialog-content  >
+          <div >                        
+                         <fieldset class="standard" >
+                          
+                                  <!-- campo de cliente -->
+                                          <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Cliente*</label>
+                                            <input  ng-disabled="true" style="color:black;" ng-model="jsonFacturacion.nombreCliente" >
+                                          </md-input-container>
+
+                                           <!-- campo de Codigo producto cliente -->
+                                          <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Codigo producto*</label>
+                                            <input  ng-model="jsonDataProducto.codigoAlterno" >
+                                          </md-input-container>
+
+                                           <!-- campo de nombre producto cliente -->
+                                          <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Nombre producto*</label>
+                                            <input   ng-model="jsonDataProducto.nombreProductoAlterno" >
+                                          </md-input-container>
+                                       
+                     
+                           <!-- Combo ciudades -->
+                          <md-input-container class="md-block" flex-gt-sm>
+                            <label>Ciudades</label>
+                              <md-select ng-model="jsonDataProducto.ciudad" ng-change="cargaBodegas()">
+                              <md-option value="" > </md-option>
+                                 <md-option ng-repeat="td in ciudades" value="{{td.id}}">
+                                  {{td.nombre}}
+                                </md-option>
+                              </md-select>
+                        </md-input-container>
+
+                         <md-input-container class="md-block" flex-gt-sm>
+                            <label>Bodega</label>
+                               <md-select ng-model="jsonDataProducto.bodega" ng-change="cargaDatosBodega()">
+                               <md-option value="" > </md-option>
+                                 <md-option ng-repeat="td in bodegasProducto" value="{{td.id}}">
+                                  {{td.codigo}}-{{td.nombre}}
+                                </md-option>
+                              </md-select>
+                        </md-input-container>
+
+                      
+                        <!--<div layout="row">
+                              <md-input-container class="md-block" flex-gt-sm>
+                                <label>Codigo alterno bodega</label>
+                                <input  ng-model="jsonProductoAdd.codigoBodegaAlterno" >
+                              </md-input-container>
+                              <md-input-container class="md-block" flex-gt-sm>
+                                <label>Nombre alterno bodega</label>
+                                <input  ng-model="jsonProductoAdd.nombreBodegaAlterno" >
+                              </md-input-container>
+                      </div>-->
+                      
+                             <md-tabs md-dynamic-height md-border-bottom>
+                                  <md-tab label="Primer nivel*">
+                                    <md-content class="md-padding">
+                                 
+
+                                          <fieldset class="standard" >
+                                                <!-- campo de  unidad cliente -->
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Unidad cliente*</label>
+                                                     <input   ng-model="jsonNivel1.codigoUnidadAlterno" >
+                                                </md-input-container>
+
+                                                 <!-- Combo de  unidad de  medida  -->
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Unidad*</label>
+                                                       <md-select ng-model="jsonNivel1.unidadId" >
+                                                         <md-option ng-repeat="td in unidadesNivel1" value="{{td.id}}">
+                                                          {{td.nombre}}
+                                                        </md-option>
+                                                      </md-select>
+                                                </md-input-container>
+                                               <!--
+                                                <center>
+                                                    <md-button md-no-ink class="md-raised md-primary" ng-click="finalizarAceptacion()">Copiar medidas</md-button>            
+                                                </center> 
+                                                <div style="border: solid;" >
+                                                                   
+                                                      <md-autocomplete style="width: 95%"
+                                                          md-selected-item="prodCli.selectedItem"
+                                                          md-search-text="prodCli.searchText.nombre"
+                                                          md-items="prodCli in productosCliente | filter:prodCli.searchText.nombre"    md-item-text="prodCli.nombreLargo"                         
+                                                          placeholder="Seleccione producto..."                          
+                                                          md-selected-item-change="cargaCiudadesProducto(prodCli.id)"                   
+                                                         >
+                                                      <md-item-template>
+                                                        <span
+                                                            md-highlight-text="prodCli.searchText.nombre"
+                                                            md-highlight-flags="i">
+                                                              {{prodCli.codigoAlterno}},  {{prodCli.nombreLargo}}                       
+                                                        </span>
+                                                      </md-item-template>
+                                                    </md-autocomplete>
+
+                                                </div>-->
+                                  
+                                                <div layout="row">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Alto cm*</label>
+                                                   <input type="number" ng-model="jsonNivel1.alto" ng-keyup="calculaVolumenNivel1()">
+                                                    </md-input-container>    
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Largo cm*</label>
+                                                     <input type="number" ng-model="jsonNivel1.largo" ng-keyup="calculaVolumenNivel1()">
+                                                    </md-input-container>    
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Ancho cm*</label>
+                                                        <input type="number" ng-model="jsonNivel1.ancho" ng-keyup="calculaVolumenNivel1()" >
+                                                    </md-input-container>    
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Volumen*</label>
+                                                        <input type="number"  ng-model="jsonNivel1.volumen" >
+                                                    </md-input-container>                                                      
+                                                </div>
+                                                 <div layout="row">
+                                                    <span flex></span>
+                                                    <span flex></span>
+                                                    <span flex></span>  
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Peso kg*</label>
+                                                        <input type="number" ng-model="jsonNivel1.pesoBruto" ng-keyup="calcularPesoVolumetricoNivel1()" >
+                                                    </md-input-container>   
+                                                   
+                                                </div>
+                                                <div layout="row">
+                                                    <span flex></span>
+                                                    <span flex></span>
+                                                    <span flex></span>  
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Peso Vol*</label>
+                                                        <input type="number" ng-model="jsonNivel1.pesoVolumetrico" >
+                                                    </md-input-container>   
+                                                    
+                                                </div>
+                                                <div layout="row">
+                                                    <span flex></span>
+                                                    <span flex></span>
+                                                    <span flex></span>  
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Valor declarado</label>
+                                                        <input type="number" ng-model="jsonNivel1.valorDeclarado" >
+                                                    </md-input-container>                                                       
+                                                </div>
+                                            </fieldset>
+                                   
+                                    </md-content>
+                                  </md-tab>
+                                    <md-tab label="Segundo nivel">
+                                    <md-content class="md-padding">
+                                          <fieldset class="standard" >
+
+                                             <!-- campo de  codigo-->
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>codigo</label>
+                                                     <input  ng-model="jsonNivel2.codigoUnidadAlterno" >
+                                                </md-input-container>
+                                                  <!-- Combo de  unidad de  medida  -->
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Unidad</label>
+                                                       <md-select ng-model="jsonNivel2.unidadId" >
+                                                         <md-option ng-repeat="td in unidadesNivel2" value="{{td.id}}">
+                                                          {{td.nombre}}
+                                                        </md-option>
+                                                      </md-select>
+                                                </md-input-container>
+
+                                               
+
+                                                 <!-- campo de  numero de unidades -->
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Numero de unidades</label>
+                                                     <input type="number"  ng-model="jsonNivel2.factorConversion" >
+                                                </md-input-container>
+
+                                                <div layout="row">
+                                                <md-input-container class="md-block" flex-gt-sm >
+                                                        <label>Alto cm</label>
+                                                        <input type="number" ng-model="jsonNivel2.alto"  ng-keyup="calculaVolumenNivel2()">
+                                                    </md-input-container>    
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Largo cm</label>
+                                                        <input type="number" ng-model="jsonNivel2.largo"  ng-keyup="calculaVolumenNivel2()">
+                                                    </md-input-container>    
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Ancho cm</label>
+                                                        <input type="number" ng-model="jsonNivel2.ancho"   ng-keyup="calculaVolumenNivel2()">
+                                                    </md-input-container>    
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Volumen</label>
+                                                        <input type="number" ng-model="jsonNivel2.volumen" >
+                                                    </md-input-container>   
+                                                   
+                                                </div>
+                                                 <div layout="row">
+                                                    <span flex></span>
+                                                    <span flex></span>
+                                                    <span flex></span>  
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Peso kg</label>
+                                                        <input type="number" ng-model="jsonNivel2.pesoBruto"  ng-keyup="calcularPesoVolumetricoNivel2()" >
+                                                    </md-input-container>   
+                                                    
+                                                </div>
+                                                <div layout="row">
+                                                    <span flex></span>
+                                                    <span flex></span>
+                                                    <span flex></span>  
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Peso Vol</label>
+                                                        <input type="number" ng-model="jsonNivel2.pesoVolumetrico" >
+                                                    </md-input-container>   
+                                                    
+                                                </div>
+                                                <div layout="row">
+                                                    <span flex></span>
+                                                    <span flex></span>
+                                                    <span flex></span>  
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Valor declarado</label>
+                                                        <input type="number" ng-model="jsonNivel2.valorDeclarado" >
+                                                    </md-input-container>   
+                                                  
+                                                    
+                                                </div>
+                                            </fieldset>
+                                   
+                                   
+                                    </md-content>
+                                  </md-tab>
+                                    <md-tab label="Tercer nivel">
+                                    <md-content class="md-padding">
+                                        <fieldset class="standard" >
+                                                 <!-- campo de  codigo-->
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>codigo</label>
+                                                     <input  ng-model="jsonNivel3.codigoUnidadAlterno" >
+                                                </md-input-container>
+                                                <!-- Combo de  unidad de  medida  -->
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Unidad</label>
+                                                       <md-select ng-model="jsonNivel3.unidadId" >
+                                                         <md-option ng-repeat="td in unidadesNivel3" value="{{td.id}}">
+                                                          {{td.nombre}}
+                                                        </md-option>
+                                                      </md-select>
+                                                </md-input-container>
+
+                                                 
+
+                                                 <!-- campo de  numero de unidades -->
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Numero de unidades</label>
+                                                     <input type="number"  ng-model="jsonNivel3.factorConversion" >
+                                                </md-input-container>
+
+                                                <div layout="row">
+                                                <md-input-container class="md-block" flex-gt-sm >
+                                                        <label>Alto cm</label>
+                                                        <input type="number" ng-model="jsonNivel3.alto"  ng-keyup="calculaVolumenNivel3()">
+                                                    </md-input-container>    
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Largo cm</label>
+                                                        <input type="number" ng-model="jsonNivel3.largo"  ng-keyup="calculaVolumenNivel3()" >
+                                                    </md-input-container>    
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Ancho cm</label>
+                                                        <input type="number" ng-model="jsonNivel3.ancho"   ng-keyup="calculaVolumenNivel3()">
+                                                    </md-input-container>    
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Volumen</label>
+                                                        <input type="number" ng-model="jsonNivel3.volumen" >
+                                                    </md-input-container>   
+                                                    
+                                                </div>
+                                                 <div layout="row">
+                                                    <span flex></span>
+                                                    <span flex></span>
+                                                    <span flex></span>  
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Peso kg</label>
+                                                        <input type="number" ng-model="jsonNivel3.pesoBruto" ng-keyup="calcularPesoVolumetricoNivel3()" >
+                                                    </md-input-container>   
+                                                   
+                                                </div>
+                                                <div layout="row">
+                                                    <span flex></span>
+                                                    <span flex></span>
+                                                    <span flex></span>  
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Peso Vol</label>
+                                                        <input type="number" ng-model="jsonNivel3.pesoVolumetrico" >
+                                                    </md-input-container>   
+                                                   
+                                                </div>
+                                                <div layout="row">
+                                                    <span flex></span>
+                                                    <span flex></span>
+                                                    <span flex></span>  
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Valor declarado</label>
+                                                        <input type="number" ng-model="jsonNivel3.valorDeclarado" >
+                                                    </md-input-container>   
+                                                    
+                                                </div>
+                                            </fieldset>
+                                   
+                                   
+                                    </md-content>
+                                  </md-tab>
+                              </md-tabs>
+                          </fieldset>                       
+                      </div>
+                   
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <h5  ng-show="faltanDatos" style="color: red">El campo '{{campoValidacion}}' es requerido.</h5>    
+      <span flex></span>
+      <md-button ng-click="cerrarModal()">
+       Cancelar
+      </md-button>
+      <md-button ng-click="validar()" style="margin-right:20px;">
+       Agregar
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

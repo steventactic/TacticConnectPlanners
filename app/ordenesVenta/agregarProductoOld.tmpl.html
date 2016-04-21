@@ -1,0 +1,116 @@
+<md-dialog style="width:60%;height:80%;"  ng-cloak >
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Agregar producto</h2>
+        <span flex></span>
+       
+      </div>
+    </md-toolbar>
+    <md-dialog-content  >
+    <br>
+          <!-- Combo de productos -->
+             <!-- <md-input-container class="md-block" flex-gt-sm>
+                        <label>Productos</label>
+                           <md-select id="productoLista" ng-model="jsonProductoAdd.producto" ng-change="cargaBodegas()"  data-nombre="productos.nombreLargo">
+                             <md-option ng-repeat="productos in productosCliente" value="{{productos.id}}">
+                              {{productos.codigoAlterno}},  {{productos.nombreLargo}}
+                            </md-option>
+                          </md-select>
+              </md-input-container>-->
+
+                <!--  autocompletar de  productos -->
+                      
+                      <md-autocomplete
+                          md-selected-item="prodCli.selectedItem"
+                          md-search-text="prodCli.searchText.nombre"
+                          md-items="prodCli in productosCliente | filter:prodCli.searchText.nombre"    md-item-text="prodCli.nombreLargo"                         
+                          placeholder="Seleccione producto..."                          
+                          md-selected-item-change="cargaBodegas(prodCli.id)"                   
+                         >
+                      <md-item-template>
+                        <span
+                            md-highlight-text="prodCli.searchText.nombre"
+                            md-highlight-flags="i">
+                              {{prodCli.codigoAlterno}},  {{prodCli.nombreLargo}}                       
+                        </span>
+                      </md-item-template>
+                    </md-autocomplete>
+                    <br><br>
+
+
+                  <!-- campo  cantidad-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                    <label>Cantidad</label>
+                    <input type="number" ng-model="jsonProductoAdd.cantidad">
+                </md-input-container>
+                   <!-- Combo de  unidad de  medida  -->
+              <md-input-container class="md-block" flex-gt-sm>
+                        <label>Unidad</label>
+                           <md-select ng-model="jsonProductoAdd.unidad">
+                             <md-option ng-repeat="td in unidadesProducto" value="{{td.id}}">
+                              {{td.nombre}}
+                            </md-option>
+                          </md-select>
+                    </md-input-container>
+                <!-- Combo de  Tipos de servicio -->
+             <!-- <md-input-container class="md-block" flex-gt-sm>
+                        <label>Bodega</label>
+                           <md-select ng-model="jsonProductoAdd.bodega">
+                             <md-option ng-repeat="td in bodegasProducto" value="{{td.id}}">
+                              {{td.codigo}}-{{td.nombre}}
+                            </md-option>
+                          </md-select>
+            </md-input-container>-->
+
+            <!--  autocompletar de  productos -->
+                      
+                      <md-autocomplete
+                          md-selected-item="bodegas.selectedItem"
+                          md-search-text="bodegas.searchText.nombre"
+                          md-items="bodegas in bodegasProducto | filter:bodegas.searchText.nombre"    md-item-text="bodegas.nombre"                         
+                          placeholder="Seleccione bodega..."                          
+                          md-selected-item-change="cargaValorBodega(bodegas.id)"                   
+                         >
+                      <md-item-template>
+                        <span
+                            md-highlight-text="bodegas.searchText.nombre"
+                            md-highlight-flags="i">
+                              {{bodegas.codigo}},  {{bodegas.nombre}}                       
+                        </span>
+                      </md-item-template>
+                    </md-autocomplete>
+                    <br><br>
+           
+            
+             
+            
+            <!-- campo  lote-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                    <label>lote</label>
+                    <input type="text" ng-model="jsonProductoAdd.lote">
+                </md-input-container>
+                <!-- campo  disponible-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                    <label>Disponible</label>
+                    <input type="number"  ng-disabled="true" ng-model="jsonProductoAdd.disponible">
+                </md-input-container>
+                <!-- campo  notas-->
+                 <md-input-container class="md-block" flex-gt-sm>
+                    <label>Notas</label>
+                    <input type="text" ng-model="jsonProductoAdd.notas">
+                </md-input-container>
+    
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+     
+      <span flex></span>
+      <md-button ng-click="cerrarModal()">
+       Cancelar
+      </md-button>
+      <md-button ng-click="agregarProductoTemporal()" style="margin-right:20px;">
+       Agregar
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
