@@ -9,7 +9,7 @@ angular.module('myApp.editarOrden', ['ngRoute'])
   });
 }])
 
-.controller('editarOrdenCtrl',  [ '$scope', '$http','datatable','$mdDialog','$mdMedia','$mdToast','$location','Scopes','$rootScope',function($scope  , $http ,datatable ,  $mdDialog, $mdMedia , $mdToast ,$location ,Scopes  , $rootScope) {
+.controller('editarOrdenCtrl',  [ '$scope', '$http','datatable','$mdDialog','$mdMedia','$mdToast','$location','Scopes','$rootScope' , '$q',function($scope  , $http ,datatable ,  $mdDialog, $mdMedia , $mdToast ,$location ,Scopes  , $rootScope , $q) {
   Scopes.store('editarOrdenCtrl', $scope);
   $scope.mensajeServidor = []; 
 
@@ -572,7 +572,7 @@ $scope.maquila = [
                              /****************CArga tablas ***********************/
                               
                       $scope.columnDefs= [
-                                            {field:'numeroItem', displayName: 'Línea',visible: true , width : '5%',enableColumnResizing: false , enableCellEdit: true},
+                                            {field:'numeroItem', displayName: 'Línea',visible: true , width : '5%',enableColumnResizing: false , enableCellEdit: false},
                                             {field:'codigoProducto', displayName: 'Producto' ,visible: true , width : '35%',enableColumnResizing: false,enableCellEdit: true,editableCellTemplate: 'ui-grid/dropdownEditor'},   
                                             {field:'cantidad', displayName: 'Cantidad' ,visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true,},                                                         
                                             {field:'codigoUnidad', displayName: 'Unidad',visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true , editableCellTemplate: 'ui-grid/dropdownEditor',
@@ -634,7 +634,7 @@ $scope.maquila = [
                                // var promise = $q.defer();
                             
                                console.log(rowEntity);
-                               
+                               var promise = $q.defer();
                                $scope.productoAddTabla = {};
                                $scope.productoAddTabla.linea = rowEntity.idLineaOrden,
                                $scope.productoAddTabla.producto = rowEntity.codigoProducto
@@ -645,6 +645,7 @@ $scope.maquila = [
                                $scope.productoAddTabla.valorDeclarado = rowEntity.valorDeclaradoPorUnidad;
 
                               console.log(angular.toJson( $scope.productoAddTabla, true));
+                                  promise.reject();
 
                             //    $scope.gridApi.rowEdit.setSavePromise( rowEntity, promise.promise );
                              
@@ -656,8 +657,11 @@ $scope.maquila = [
                          $scope.gridOptions.multiSelect = false;
                          $scope.gridOptions.onRegisterApi = function( gridApi ) {
                                       $scope.gridApi = gridApi;
-                             
-                                     gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+                                   gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
+                                       console.log('edited row id:' + rowEntity.id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue );
+                                      $scope.$apply();
+                                    });
+                                    /// gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
                                 /*  $scope.gridApi.selection.on.rowSelectionChanged($scope, function(row){
                                       console.log("entra");
                                       console.log( row.entity.idOrden);
@@ -1093,8 +1097,8 @@ $scope.maquila = [
               for (var i =0; i < $scope.productosCliente.length; i++) {
                  $scope.dataCombo= $scope.dataCombo.concat(
                                                             {
-                                                              id:$scope.productosCliente[i].codigo , 
-                                                              value : $scope.productosCliente[i].nombre
+                                                              id:$scope.productosCliente[i].codigo + $scope.productosCliente[i].nombre, 
+                                                              value :$scope.productosCliente[i].codigo + $scope.productosCliente[i].nombre
                                                             }
                                                         );
                }
