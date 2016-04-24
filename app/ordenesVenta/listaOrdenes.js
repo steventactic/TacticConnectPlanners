@@ -9,7 +9,7 @@
     });
   }])
 
-  .controller('listaOrdenesCtrl', [ '$scope', 'datatable', '$location','$http','Scopes','$mdDialog','$mdMedia','$rootScope',function($scope   ,datatable ,$location ,$http ,Scopes,$mdDialog,$mdMedia ,$rootScope  ) {
+  .controller('listaOrdenesCtrl', [ '$scope', 'datatable', '$location','$http','Scopes','$mdDialog','$mdMedia','$rootScope','$mdToast',function($scope   ,datatable ,$location ,$http ,Scopes,$mdDialog,$mdMedia ,$rootScope  , $mdToast ) {
   Scopes.store('listaOrdenesCtrl', $scope);
  
   $scope.mensajeServidor =  $rootScope.mensajesServidor; 
@@ -28,6 +28,7 @@
   $scope.datos.verOpciones = true;
   $scope.jsonListaOrdenes= {};
   $scope.jsonListaOrdenes.idCliente = 0;
+
   
 
 
@@ -47,6 +48,41 @@
   $scope.usuario = JSON.parse(window.localStorage.getItem("objetoUsuario"));
  // $scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
   }
+
+  var last = {
+      bottom: true,
+      top: false,
+      left: true,
+      right: false
+    };
+  $scope.toastPosition = angular.extend({},last);
+  $scope.getToastPosition = function() {
+    sanitizePosition();
+    return Object.keys($scope.toastPosition)
+    
+      .filter(function(pos) { return $scope.toastPosition[pos]; })
+      .join(' ');
+  };
+  function sanitizePosition() {
+    var current = $scope.toastPosition;
+    if ( current.bottom && last.top ) current.top = false;
+    if ( current.top && last.bottom ) current.bottom = false;
+    if ( current.right && last.left ) current.left = false;
+    if ( current.left && last.right ) current.right = false;
+    last = angular.extend({},current);
+  }
+
+ $scope.mostrarInfoUsuario = function() {
+    var pinTo = $scope.getToastPosition();
+    $mdToast.show({
+          template: '<md-toast class="md-toast-steven" ><br>Codigo cliente : 123 , usuario : juanf , Rol : administrador </md-toast>',
+          hideDelay   : 6000,
+          position    :  'bottom left'
+          //controller  : 'ToastCtrl',          
+  
+     
+    });
+  };
   
   
 

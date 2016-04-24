@@ -167,7 +167,7 @@
                           md-selected-item="seg.selectedItem"
                           md-search-text="seg.searchText.nombre"
                           md-items="seg in segmento | filter:seg.searchText.nombre"                   md-item-text="seg.nombre"                         
-                          placeholder="Seleccione segmento ..."                          
+                          placeholder="Canal de venta ..."                       
                           md-selected-item-change="cargaDestinatarios(seg.id , seg.nombre)"  
                           md-min-length="0"                   
                          >
@@ -199,7 +199,7 @@
                         </md-autocomplete>-->
 
                         <md-input-container class="md-block" flex-gt-sm>
-                        <label>Destinatario*</label>
+                        <label>Cliente destino*</label>
                         <md-select ng-model="jsonFacturacion.destinatario" ng-change="cargaCiudadEnvio()">
                              <md-option ng-repeat="dest in destinatario" value="{{dest.id}}">
                               {{dest.nombre}} - {{dest.numeroIdentificacion}}

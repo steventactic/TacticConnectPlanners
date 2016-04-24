@@ -80,7 +80,7 @@
                     </md-button>-->
                   </div>
                 </md-toolbar>
-    <md-tabs md-dynamic-height md-border-bottom md-selected="dataTabs.tabSeleccionada"> 
+  <md-tabs md-dynamic-height md-border-bottom  md-selected="dataTabs.tabSeleccionada"> 
     <!--  Inicio Datos de facturacion-->
       <md-tab label="Bill to" ng-disabled="dataTabs.tabFacturacion">
       <md-content class="md-padding">
@@ -143,7 +143,7 @@
                     <br>
               <!-- Combo de  segmento -->
                    <md-input-container class="md-block" flex-gt-sm>
-                        <label>Segmento</label>
+                        <label>Canal de venta</label>
                            <md-select ng-model="jsonFacturacion.segmento" ng-disabled="true"  ng-change="cargaDestinatarios()">
                              <md-option>
                               Cliente
@@ -170,7 +170,7 @@
                           md-search-text="dest.searchText.nombre"
                           md-items="dest in destinatario | filter:dest.searchText.nombre"           
                           md-item-text="dest.nombre"                         
-                          placeholder="Seleccione destinatario ..."                          
+                          placeholder="Cliente  destino ..."                          
                           md-selected-item-change="cargaCiudadEnvio(dest.id , 1)"      
                                       
                          >
@@ -244,7 +244,7 @@
                 </div>
            
                     <center>
-                 <md-button md-no-ink class="md-raised md-primary" ng-click="finalizarEdicion()">Guardar</md-button>                 
+                 <md-button md-no-ink class="md-raised md-primary" ng-disabled="bloquearBotonGuardar"  ng-click="cambiaEstado()">Guardar</md-button>                 
             </center>
 
                  <!--<md-button md-no-ink class="md-raised md-primary" ng-click="validaTabFacturacion()">Continuar a datos envio</md-button>-->
@@ -269,7 +269,7 @@
               </md-input-container>
 
                      <md-input-container class="md-block" flex-gt-sm>
-                        <label>Destino*</label>
+                        <label>Punto destino*</label>
                            <md-select ng-model="jsonEnvio.destino" ng-change="cargaInfoDestinoEnvio()">
                             <md-option value="" > </md-option>
                              <md-option ng-repeat="des in destino"  value="{{des.id}}">
@@ -324,9 +324,9 @@
 
                 <md-radio-group  ng-model="data.info">
                   
-                    <md-radio-button value="3"> No confirmado    </md-radio-button> 
-                    <md-radio-button value="1" >Rango de fechas   </md-radio-button>
-                    <md-radio-button value="0"> Fecha fija      </md-radio-button> 
+                    <md-radio-button value="3"> Sin confirmar    </md-radio-button> 
+                    <md-radio-button value="1" >Rango    </md-radio-button>
+                    <md-radio-button value="0"> Fijo      </md-radio-button> 
                              
                 </md-radio-group>
 
@@ -425,7 +425,7 @@
                          <input  type="textarea" ng-model="jsonOtros.notas" >
             </md-input-container>
             <center>
-                 <md-button md-no-ink class="md-raised md-primary" ng-click="finalizarEdicion()">Guardar</md-button>                 
+                 <md-button md-no-ink class="md-raised md-primary"  ng-disabled="bloquearBotonGuardar" ng-click="finalizarEdicion()">Guardar</md-button>                 
             </center>
 
 
@@ -637,7 +637,7 @@
                   <div class="md-toolbar-tools" >
                 
                     <h2>
-                      <span>Gestion de lineas</span>
+                      <span>Seleccione los productos de su pedido</span>
                     </h2>
                     <span flex></span>
                  
@@ -697,7 +697,7 @@
                 <div class="watermark" ng-show="!gridOptions.data.length">No se encontraron resultados</div>    
                 </div>
                      <center>
-                      <md-button md-no-ink class="md-raised md-primary" ng-click="finalizarEdicion()">Guardar</md-button>                 
+                      <md-button md-no-ink class="md-raised md-primary" ng-disabled="bloquearBotonGuardar" ng-click="finalizarEdicion()">Guardar</md-button>                 
                       </center>
 
                 <!--
@@ -720,9 +720,9 @@
 
                   
               <center>
-                  <md-button md-no-ink class="md-raised md-primary" ng-click="finalizarEdicion()">Guardar</md-button>
+                  <md-button md-no-ink class="md-raised md-primary" ng-disabled="bloquearBotonGuardar"  ng-click="finalizarEdicion()">Guardar</md-button>
 
-                 <md-button md-no-ink class="md-raised md-primary" ng-click="finalizarAceptacion()">Aceptar</md-button>                    
+                 <md-button md-no-ink class="md-raised md-primary" ng-disabled="bloquearBotonGuardar" ng-click="finalizarAceptacion()">Aceptar</md-button>                    
               </center>
                      
             </md-content>

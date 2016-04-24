@@ -66,9 +66,18 @@
                         </h2>
                                         
                        <span flex></span>
+
+                         <md-button   class="md-fab md-primary  md-mini md-hue-2" aria-label="refrecar" ng-click="mostrarInfoUsuario()">
+                               <md-tooltip md-direction="left">
+                                Ver info usuario
+                              </md-tooltip>
+                              <md-icon md-svg-src="img/update-arrows.svg"></md-icon>
+                            </md-button>
+
                           <md-switch ng-model="datos.verOpciones"  aria-label="Switch 2" ng-true-value="true" ng-false-value="false"  class="md-fab">
                                 Ver opciones
                           </md-switch>
+
                       </div>
                     </md-toolbar>
                        <div ng-show="datos.verOpciones" class="md-toolbar-tools" style="width: 100%">
