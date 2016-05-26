@@ -99,7 +99,6 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
     $scope.mostrarEditar =  0;
     $scope.mostrarEliminar =  0;
     $scope.agregaDestinoNuevo = true;
-    $scope.jsonFacturacion.numeroDocumento = Number(new Date());   
     
    //  $scope.mensajesServidor = Scopes.get('loginCtrl').mensajesServidor;
   /*$scope.productosTemporales=  $scope.productosTemporales.concat([
@@ -130,11 +129,9 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
     );
   };
     $scope.verificaDocumento  = function(){
-      console.log("valor cliente ==> ");   
-
-
+      console.log("valor cliente ==> ");      
       console.log( $scope.jsonFacturacion.cliente);        
-          /*if($scope.jsonFacturacion.cliente === undefined ||
+          if($scope.jsonFacturacion.cliente === undefined ||
                   $scope.jsonFacturacion.cliente === 'undefined'){
             $scope.campoRequerido = "'Cliente'";
             $scope.showAlert();
@@ -149,8 +146,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
             return;
          }
 
-         else */
-          if($scope.jsonFacturacion.destinatario === undefined ||
+         else if($scope.jsonFacturacion.destinatario === undefined ||
                   $scope.jsonFacturacion.destinatario === 'undefined'){
 
             $scope.campoRequerido = "'Destinatario'";
@@ -190,11 +186,9 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                   {
                                     idOrden :null, 
                                     tipoServicio : parseInt($scope.tipoServicioEnvio),  
-                                    //cliente : parseInt($scope.jsonFacturacion.cliente),
-                                    cliente :14,                               
+                                    cliente : parseInt($scope.jsonFacturacion.cliente),                               
                                     numeroDocumentoOrdenCliente :$scope.jsonFacturacion.numeroDocumento,
-                                    //segmento :parseInt($scope.jsonFacturacion.segmento),
-                                    segmento :7,
+                                    segmento :parseInt($scope.jsonFacturacion.segmento),
                                     destinatario:parseInt($scope.jsonFacturacion.destinatario),
                                     nombre :$scope.jsonFacturacion.nombre,
                                     telefonos :$scope.jsonFacturacion.telefonos,
@@ -520,7 +514,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
        // $scope.dest.searchText.nombre = "";
         
          $scope.habi.habilitarAgregarDestinatario = false;
-         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/segmentos-x-cliente-x-tipo_servicio?id_cliente='+$scope.jsonListaOrdenes.idCliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
+         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/segmentos-x-cliente-x-tipo_servicio?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
               .success(function(data, status, headers, config){
                 //alert("**** SUCCESS ****");
                // alert(status);
@@ -534,7 +528,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                 console.log(config);
               })
               .then(function(response){
-                $scope.cargarConfiguracion($scope.jsonListaOrdenes.idCliente , $scope.jsonFacturacion.tipoServicio );
+                $scope.cargarConfiguracion();
                 $rootScope.segmento= response.data;
                 //$scope.segmento= response.data;
                console.log("json cargado segmento ===> " );
@@ -543,7 +537,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
         });    
 
       }
-     $scope.cargaSegmentos();
+     
       /*************************Combo deestinartario por  tipo de servicio y clientes*******************************/
        /* $scope.destinatario= [
                    {"id":"1", "texto":"Destinatario1"},
@@ -552,15 +546,13 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
         ];*/
   
         $scope.cargaDestinatarios = function (val ,nombre){
-           $scope.jsonFacturacion.segmento = val ; 
+           //$scope.jsonFacturacion.segmento = val ; 
 
            //$scope.jsonFacturacion.nombreSegmento = nombre ; 
             
             $scope.destinatario=[];
-            
-          console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinatarios_remitentes-x-cliente?id_cliente=14&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio +'&id_segmento='+ $scope.jsonFacturacion.segmento) 
-          $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinatarios_remitentes-x-cliente?id_cliente=14&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio +'&id_segmento='+ $scope.jsonFacturacion.segmento)
-          // $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinatarios_remitentes-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio +'&id_segmento='+$scope.jsonFacturacion.segmento)
+           console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinatarios_remitentes-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio +'&id_segmento='+$scope.jsonFacturacion.segmento)
+           $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinatarios_remitentes-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio +'&id_segmento='+$scope.jsonFacturacion.segmento)
               .success(function(data, status, headers, config){
                 //alert("**** SUCCESS ****");
                // alert(status);
@@ -584,7 +576,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
            });    
 
         }
-        //$scope.cargaDestinatarios();
+       
         /*************************Combo ciudad*******************************************/
          
         /* $scope.ciudad= [
@@ -614,8 +606,6 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                 $scope.ciudad= response.data;
                console.log("json cargado ciudad ===> "+$scope.destinatario[0].id   + "----" +  $scope.jsonFacturacion.destinatario );
                console.log($scope.ciudad) ; 
-               console.log("Destinatarios ==>");
-               console.log($scope.destinatario);
                for (var i = 0; i < $scope.destinatario.length; i++) {
                
            
@@ -799,8 +789,8 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
 
 
         $scope.cargarConfiguracion = function (cliente,tipoServicio){
-            console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+tipoServicio+'&id_cliente='+cliente)  
-            $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+tipoServicio+'&id_cliente='+cliente)
+              
+            $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio+'&id_cliente='+$scope.jsonFacturacion.cliente)
               .success(function(data, status, headers, config){
                 //alert("**** SUCCESS ****");
                // alert(status);
@@ -818,7 +808,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                
                $scope.configuracionData= response.data;
               console.log("json cargado configuracion ===> " );
-            //  console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio+'&id_cliente='+$scope.jsonFacturacion.cliente);
+              console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio+'&id_cliente='+$scope.jsonFacturacion.cliente);
 
                console.log($scope.configuracionData) ; 
                console.log("-----------------------------------")
@@ -1712,7 +1702,13 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
               $scope.selected = [];
         
                 $scope.toggle = function (item, list) {
-                
+                /*  console.log("agregar");
+                  console.log(item);
+                  console.log("valores");
+
+                  
+                 $scope.selected = $scope.selected.concat([item.id]);
+                  console.log(angular.toJson($scope.selected , true));*/
                   var idx = list.indexOf(item);
                   if (idx > -1) {
                     list.splice(idx, 1);
@@ -1725,10 +1721,6 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
 
                   return list.indexOf(item) > -1;
                 };
-
-
-
-
                  $scope.faltanDatos = false;
 
                 $scope.validarCreacion = function (){

@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Crear nuevo destinatario {{origenDestinoTitulo}} </h2>
+        <h2>Crear nuevo destino {{origenDestinoTitulo}} </h2>
         <span flex></span>
        
       </div>
@@ -10,10 +10,10 @@
     <md-dialog-content  >
       <md-content layout-padding >
             <!-- campo de cliente -->
-            <!--<md-input-container class="md-block" style="color:black;" flex-gt-sm >
+            <md-input-container class="md-block" style="color:black;" flex-gt-sm >
               <label>Cliente*</label>
               <input ng-disabled= "true" style="color:black;" ng-model="jsonFacturacion.nombreCliente" >
-            </md-input-container>-->
+            </md-input-container>
              <!-- campo de segementos -->
            <!-- <md-input-container class="md-block" flex-gt-sm>
               <label>Segmentos*</label>
@@ -67,10 +67,7 @@
               <label>Nombre cliente</label>
               <input   ng-model="jsonDestinosBillTo.clienteNombre" >
             </md-input-container>-->
-            <div layout="row">
-              
 
-            
                <md-input-container class="md-block"  flex-gt-sm>
                         <label>Tipo identificacion*</label>
                            <md-select   ng-model="jsonDestinosBillTo.identificacionType" >
@@ -79,25 +76,22 @@
                             </md-option>
                           </md-select>
                     </md-input-container>
-
-
             
-                    <md-input-container class="md-block" flex-gt-sm>
-                      <label>Numero identificación*</label>
-                      <input   ng-model="jsonDestinosBillTo.numeroIdentificacion" >
-                    </md-input-container>
-                      
-                    <md-input-container class="md-block" flex-gt-sm>
-                      <label>Digito verificación</label>
-                      <input   ng-model="jsonDestinosBillTo.digitoVerificacion" >
-                    </md-input-container>
-                    <!-- campo de codigo -->
-                      <md-input-container class="md-block" flex-gt-sm>
-                        <label>Codigo</label>
-                        <input   ng-model="jsonDestinosBillTo.codigo" >
-                      </md-input-container>
-            </div>
-            <div layout="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Numero identificación*</label>
+              <input   ng-model="jsonDestinosBillTo.numeroIdentificacion" >
+            </md-input-container>
+
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Digito verificación</label>
+              <input   ng-model="jsonDestinosBillTo.digitoVerificacion" >
+            </md-input-container>
+
+            <!-- campo de codigo -->
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Codigo</label>
+              <input   ng-model="jsonDestinosBillTo.codigo" >
+            </md-input-container>
             <!-- campo de nombre -->
             <md-input-container class="md-block" flex-gt-sm>
               <label>Nombre*</label>
@@ -109,11 +103,10 @@
               <label>Nombre comercial</label>
               <input   ng-model="jsonDestinosBillTo.nombreComercial" >
             </md-input-container>
-            </div>
                <label>Segmentos*</label>          
                    <md-input-container class="md-block" flex-gt-sm>      
                           <div layout="row" layout-wrap flex>                        
-                       <div flex="25" ng-repeat="item in segmentosDest">
+                       <div flex="50" ng-repeat="item in segmentosDest">
                         <md-checkbox ng-checked="exists(item.id, selected)"
                        ng-click="toggle(item.id, selected)" >
                           {{ item.nombre }} 
@@ -121,57 +114,29 @@
                       </div>
                       </div>
                     </md-input-container>
-
-
-
           <fieldset class="standard" >
+
+
+
             
-            <legend>Datos de contacto para facturación</legend>
+            <legend>Datos de contacto</legend>
+            <!-- campo de indicaciones -->
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Nombre contacto</label>
+              <input   ng-model="jsonDestinosBillTo.contactoNombres" >
+            </md-input-container>
+            
+            <!-- campo de Nombres -->
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Email contacto</label>
+              <input   ng-model="jsonDestinosBillTo.contactoEmail" >
+            </md-input-container>  
 
-            <div layout="row">
-              <div layout="column" style="width: 50%;">
-                  <!-- campo de ciudad -->
-                  <md-input-container class="md-block" flex-gt-sm>
-                    <label>Ciudad</label>
-                    <input   ng-model="jsonDestinosBillTo.ciudad" >
-                  </md-input-container>
-                  
-                  <!-- campo de direcciones -->
-                  <md-input-container class="md-block" flex-gt-sm>
-                    <label>Direccion</label>
-                    <input   ng-model="jsonDestinosBillTo.direccion" >
-                  </md-input-container>  
-
-                   <!-- campo indicaciones de llegada -->
-                  <md-input-container class="md-block" flex-gt-sm>
-                    <label>Indicaciones de llegada</label>
-                    <input   ng-model="jsonDestinosBillTo.indicacionesDeLlegada" >
-                  </md-input-container>      
-              </div>
-              <div layout="column" style="width: 50%;">
-                   <!-- campo de indicaciones -->
-                  <md-input-container class="md-block" flex-gt-sm>
-                    <md-icon md-svg-src="img/contacto.svg" class="email"></md-icon>
-                    <label>Nombre contacto</label>
-                    <input   ng-model="jsonDestinosBillTo.contactoNombres" >
-                  </md-input-container>
-                  
-                  <!-- campo de Nombres -->
-                  <md-input-container class="md-block" flex-gt-sm>
-                    <md-icon md-svg-src="img/email.svg" class="email"></md-icon>
-                    <label>Email contacto</label>
-                    <input   ng-model="jsonDestinosBillTo.contactoEmail" >
-                  </md-input-container>  
-
-                   <!-- campo de  telefono -->
-                  <md-input-container class="md-block" flex-gt-sm>
-                    <md-icon md-svg-src="img/telefono.svg" class="email"></md-icon>
-                    <label>Telefono contacto </label>
-                    <input   ng-model="jsonDestinosBillTo.contactoTelefonos" >
-                  </md-input-container>
-              </div>
-            </div>
-          
+             <!-- campo de  telefono -->
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Telefono contacto </label>
+              <input   ng-model="jsonDestinosBillTo.contactoTelefonos" >
+            </md-input-container>
 
           </fieldset>
 

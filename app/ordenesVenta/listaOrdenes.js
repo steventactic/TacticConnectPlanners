@@ -9,7 +9,7 @@
     });
   }])
 
-  .controller('listaOrdenesCtrl', [ '$scope', 'datatable', '$location','$http','Scopes','$mdDialog','$mdMedia','$rootScope','$mdToast',function($scope   ,datatable ,$location ,$http ,Scopes,$mdDialog,$mdMedia ,$rootScope  , $mdToast ) {
+  .controller('listaOrdenesCtrl', [ '$scope', 'datatable', '$location','$http','Scopes','$mdDialog','$mdMedia','$rootScope',function($scope   ,datatable ,$location ,$http ,Scopes,$mdDialog,$mdMedia ,$rootScope  ) {
   Scopes.store('listaOrdenesCtrl', $scope);
  
   $scope.mensajeServidor =  $rootScope.mensajesServidor; 
@@ -28,7 +28,6 @@
   $scope.datos.verOpciones = true;
   $scope.jsonListaOrdenes= {};
   $scope.jsonListaOrdenes.idCliente = 0;
-
   
 
 
@@ -48,41 +47,6 @@
   $scope.usuario = JSON.parse(window.localStorage.getItem("objetoUsuario"));
  // $scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
   }
-
-  var last = {
-      bottom: true,
-      top: false,
-      left: true,
-      right: false
-    };
-  $scope.toastPosition = angular.extend({},last);
-  $scope.getToastPosition = function() {
-    sanitizePosition();
-    return Object.keys($scope.toastPosition)
-    
-      .filter(function(pos) { return $scope.toastPosition[pos]; })
-      .join(' ');
-  };
-  function sanitizePosition() {
-    var current = $scope.toastPosition;
-    if ( current.bottom && last.top ) current.top = false;
-    if ( current.top && last.bottom ) current.bottom = false;
-    if ( current.right && last.left ) current.left = false;
-    if ( current.left && last.right ) current.right = false;
-    last = angular.extend({},current);
-  }
-
- $scope.mostrarInfoUsuario = function() {
-    var pinTo = $scope.getToastPosition();
-    $mdToast.show({
-          template: '<md-toast class="md-toast-steven" ><br>Codigo cliente : 123 , usuario : juanf , Rol : administrador </md-toast>',
-          hideDelay   : 6000,
-          position    :  'bottom left'
-          //controller  : 'ToastCtrl',          
-  
-     
-    });
-  };
   
   
 
@@ -156,14 +120,13 @@
                                '</div>';
                 }
 
-          $scope.rowDblClick = function(row) {
+          $scope.rowDblClick = function( row) {
        //   alert(JSON.stringify(row.entity)); 
             $scope.cargarEdicion();
           }
 
         $scope.gridOptions = {enableRowSelection: true, 
                               enableRowHeaderSelection: false,
-                              enableColumnResize: true,
                               selectedItems: $scope.selections,
                                 enableRowSelection: true,
                                  rowTemplate: rowTemplate()
@@ -304,7 +267,6 @@
           
        }
 
-
         if(window.localStorage.getItem("clienteCache")  === null){
           console.log("no exite cache  CLIENTE");
           $scope.jsonListaOrdenes.idCliente = "";
@@ -328,20 +290,16 @@
 
           }else{
 
-            console.log("no existe ");
+            console.log("no exite ");
           }
       
          
          $scope.cadena = ""; 
-         if($scope.jsonListaOrdenes.idCliente === ''){
-            $scope.datos.activarCrearOrden = 0 ; 
-          }
          if ($scope.jsonListaOrdenes.idCliente != undefined ){
           $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id+'&id_cliente='+$scope.jsonListaOrdenes.idCliente ; 
 
          }else{
 
-             
           $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id ;   
          }
           console.log($scope.cadena);

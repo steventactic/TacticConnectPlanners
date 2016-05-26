@@ -90,7 +90,7 @@
 
 
                 <!-- Combo de  cliente -->
-           <!--   <md-input-container class="md-block" flex-gt-sm>
+             <!-- <md-input-container class="md-block" flex-gt-sm>
                         <label>Cliente</label>
                            <md-select ng-model="jsonFacturacion.cliente" ng-change="cargaSegmentos()">
                              <md-option ng-repeat="dest in clientes" value="{{dest.id}}">
@@ -100,7 +100,7 @@
                     </md-input-container>-->
 
                       <!--  autocompletar de  CLIENTE -->
-                     <!-- <br><br>
+                      <br><br>
                       <md-autocomplete
                           md-selected-item="cli.selectedItem"
                           md-search-text="cli.searchText.nombre"
@@ -116,13 +116,13 @@
                           {{ cli.nombre }}
                         </span>
                       </md-item-template>
-                    </md-autocomplete>-->
+                    </md-autocomplete>
 
 
            
 
               <!-- Combo de  segemento -->
-               <!--  <md-input-container class="md-block" flex-gt-sm>
+                   <md-input-container class="md-block" flex-gt-sm>
                         <label>Segmento*</label>
                            <md-select ng-model="jsonFacturacion.segmento" ng-change="cargaDestinatarios()">
                            <md-option value="0"></md-option>
@@ -130,7 +130,7 @@
                               {{dest.nombre}} 
                             </md-option>
                           </md-select>
-                    </md-input-container>-->
+                    </md-input-container>
                       <!--  autocompletar de  SEGMENTO -->
                
                       <!--<md-autocomplete
@@ -162,23 +162,7 @@
                     </md-input-container>-->
 
                      <!--  autocompletar de  DESTINATARIO  -->
-                     <label>¿Quien solicita el servicio?</label>
-                     <md-autocomplete
-                          md-selected-item="seg.selectedItem"
-                          md-search-text="seg.searchText.nombre"
-                          md-items="seg in segmento | filter:seg.searchText.nombre"                   md-item-text="seg.nombre"                         
-                          placeholder="Canal de venta ..."                       
-                          md-selected-item-change="cargaDestinatarios(seg.id , seg.nombre)"  
-                          md-min-length="0"                   
-                         >
-                      <md-item-template>
-                        <span
-                            md-highlight-text="seg.searchText.nombre"
-                            md-highlight-flags="i">
-                          {{ seg.nombre }}
-                        </span>
-                      </md-item-template>
-                    </md-autocomplete>
+              
                       <div layout-gt-sm="row">
                            <!-- <md-autocomplete
                               style="width: 95%"
@@ -197,9 +181,8 @@
                                 </span>
                               </md-item-template>
                         </md-autocomplete>-->
-
                         <md-input-container class="md-block" flex-gt-sm>
-                        <label>Cliente destino*</label>
+                        <label>Destinatario*</label>
                         <md-select ng-model="jsonFacturacion.destinatario" ng-change="cargaCiudadEnvio()">
                              <md-option ng-repeat="dest in destinatario" value="{{dest.id}}">
                               {{dest.nombre}} - {{dest.numeroIdentificacion}}
@@ -207,8 +190,8 @@
                           </md-select>
                     </md-input-container>
                         <md-input-container>
-                          <md-button ng-disabled="false" class="md-fab md-mini md-primary" aria-label="agregar destino origen"  ng-click="showAdvancedDestinosBillTo()">
-                             <md-icon md-svg-src="img/add-song.svg"                  style="color greenyellow;"></md-icon>
+                          <md-button ng-disabled="agregaDestinoNuevo" class="md-fab md-mini md-primary" aria-label="agregar destino origen"  ng-click="showAdvancedDestinosBillTo()">
+                             <md-icon md-svg-src="img/add-song.svg" style="color: greenyellow;"></md-icon>
                           </md-button>
                         </md-input-container>
 
@@ -220,7 +203,7 @@
                       
                       
                  
-                    
+                    <br><br>
 
 
                    <!--   <md-input-container>
@@ -231,55 +214,27 @@
                 </div>-->
               
                   <!-- campo  numero documento-->
-                <!-- <md-input-container class="md-block" flex-gt-sm>
+                 <md-input-container class="md-block" flex-gt-sm>
                     <label>Numero documento que acompaña la orden*</label>
                     <input ng-model="jsonFacturacion.numeroDocumento" >
-                </md-input-container>-->
-                <div layout="row"> 
-                    <div layout="column" style="width: 50%;"> 
-                       <!-- campo  nombre-->
-                       <md-input-container class="md-block" flex-gt-sm>
-                         <md-icon md-svg-src="img/city.svg" class="email"></md-icon>
-                          <label>Ciudad</label>
-                          <input ng-model="jsonFacturacion.ciudad" >
-                      </md-input-container>
-                       <!-- campo  telefonos-->
-                       <md-input-container class="md-block" flex-gt-sm>
-                         <md-icon md-svg-src="img/gps.svg" class="email"></md-icon>
-                          <label>Dirección</label>
-                          <input  ng-model="jsonFacturacion.direccion">
-                      </md-input-container>                
-                       <!-- campo  email-->
-                       <md-input-container class="md-block" flex-gt-sm>
-                         <md-icon md-svg-src="img/indicacionesDireccion.svg" class="email"></md-icon>
-                          <label>Indicaciones direccion</label>
-                          <input  ng-model="jsonFacturacion.indicaciones">
-                      </md-input-container>
-                     </div>
-                     <div layout="column" style="width: 50%;"> 
-                       <!-- campo  nombre-->
-                       <md-input-container class="md-block" flex-gt-sm>
-                         <md-icon md-svg-src="img/contacto.svg" class="email"></md-icon>
-                          <label>Nombre contacto</label>
-                          <input ng-model="jsonFacturacion.nombre" >
-                      </md-input-container>
-                       <!-- campo  telefonos-->
-                       <md-input-container class="md-block" flex-gt-sm>
-                         <md-icon md-svg-src="img/telefono.svg" class="email"></md-icon>
-                          <label>Telefonos contacto</label>
-                          <input  ng-model="jsonFacturacion.telefonos">
-                      </md-input-container>                
-                       <!-- campo  email-->
-                       <md-input-container class="md-block" flex-gt-sm>
-                         <md-icon md-svg-src="img/email.svg" class="email"></md-icon>
-                          <label>Email contacto</label>
-                          <input  ng-model="jsonFacturacion.email">
-                      </md-input-container>
-                     </div>
-              </div>
-                  
-
-                   
+                </md-input-container>
+                                             
+                    <!-- campo  nombre-->
+                     <md-input-container class="md-block" flex-gt-sm>
+                        <label>Nombre contacto</label>
+                        <input ng-model="jsonFacturacion.nombre" >
+                    </md-input-container>
+                     <!-- campo  telefonos-->
+                     <md-input-container class="md-block" flex-gt-sm>
+                        <label>Telefonos contacto</label>
+                        <input  ng-model="jsonFacturacion.telefonos">
+                    </md-input-container>                
+                     <!-- campo  email-->
+                     <md-input-container class="md-block" flex-gt-sm>
+                        <label>Email contacto</label>
+                        <input  ng-model="jsonFacturacion.email">
+                    </md-input-container>
+              
              <center>
                  <md-button md-no-ink class="md-raised md-primary" ng-click="verificaDocumento()">CONTINUAR A SHIP TO</md-button>
                  </center>
@@ -368,19 +323,16 @@
               
                       <!-- campo  nombre-->
                      <md-input-container class="md-block" flex-gt-sm>
-                          <md-icon md-svg-src="img/contacto.svg" class="email"></md-icon>
                         <label>Nombre de contacto</label>
                         <input type="text" ng-model="jsonEnvio.nombre" >
                     </md-input-container>
                       <!-- campo  telefonos-->
                      <md-input-container class="md-block" flex-gt-sm>
-                          <md-icon md-svg-src="img/telefono.svg" class="email"></md-icon>
                         <label>Telefonos de contacto </label>
                         <input type="text" ng-model="jsonEnvio.telefonos" >
                     </md-input-container>
                       <!-- campo  email-->
                      <md-input-container class="md-block" flex-gt-sm>
-                          <md-icon md-svg-src="img/email.svg" class="email"></md-icon>
                         <label>Email de contacto</label>
                         <input type="email" ng-model="jsonEnvio.email">
                     </md-input-container>
@@ -569,7 +521,7 @@
                         </tr>
                   </table>-->
 
-                        <div ui-grid="gridOptions"  ui-grid-edit ui-grid-row-edit ui-grid-cellNav  style="width:100%;height:400px;" ui-grid-selection class="grid">
+                        <div ui-grid="gridOptions"   style="width:100%;height:400px;" ui-grid-selection class="grid">
                           <div class="watermark" ng-show="!gridOptions.data.length">No se encontraron resultados</div>
                         </div>
 

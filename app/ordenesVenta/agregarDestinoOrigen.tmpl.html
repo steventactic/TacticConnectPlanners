@@ -10,20 +10,20 @@
     <md-dialog-content  >
       <md-content layout-padding >
             <!-- campo de cliente -->
-           <!-- <md-input-container class="md-block" flex-gt-sm>
+            <md-input-container class="md-block" flex-gt-sm>
               <label>Cliente*</label>
               <input   ng-disabled="true"  style="color:black;" ng-model="jsonFacturacion.nombreCliente" >
-            </md-input-container>-->
+            </md-input-container>
              <!-- campo de segementos -->
            <!-- <md-input-container class="md-block" flex-gt-sm>
               <label>Segmentos*</label>
               <input   ng-disabled="true"  style="color:black;" ng-model="jsonFacturacion.nombreSegmento" >
             </md-input-container>-->
              <!-- campo de destinatario -->
-          <!--  <md-input-container class="md-block" flex-gt-sm>
+            <md-input-container class="md-block" flex-gt-sm>
               <label>Destinatario*</label>
               <input   ng-disabled="true"  style="color:black;" ng-model="jsonFacturacion.nombreDestinatario" >
-            </md-input-container>-->
+            </md-input-container>
             <!-- lista de segmentos -->
           <!--  <md-input-container class="md-block" flex-gt-sm>
                         <label>Segmentos</label>
@@ -52,87 +52,74 @@
                 </span>
               </md-item-template>
             </md-autocomplete>-->
-            <div layout="row">
-                <!-- campo de codigo -->
-               <!-- <md-input-container class="md-block" flex-gt-sm>
-                  <label>Codigo</label>
-                  <input   ng-model="jsonDestinoOrigen.codigo" >
-                </md-input-container>-->
-                <!-- campo de nombre -->
-                <md-input-container class="md-block" flex-gt-sm>
-                  <label>Nombre del punto de destino</label>
-                  <input   ng-model="jsonDestinoOrigen.nombre" >
-                </md-input-container>
-            </div>
-            <fieldset class="standard" >
+
+            <!-- campo de codigo -->
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Codigo</label>
+              <input   ng-model="jsonDestinoOrigen.codigo" >
+            </md-input-container>
+            <!-- campo de nombre -->
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Nombre</label>
+              <input   ng-model="jsonDestinoOrigen.nombre" >
+            </md-input-container>
+              <md-input-container class="md-block" flex-gt-sm>
+              <label>ciudad</label>
+               <!--  autocompletar de ciudad -->                      
+              <md-autocomplete style="width: 100%"
+                  md-selected-item="ciudad.selectedItem"
+                  md-search-text="ciudad.searchText.nombre"
+                  md-items="ciudad in  ciudades | filter:ciudad.searchText.nombre" 
+                  md-item-text="ciudad.nombre"                         
+                  placeholder="Seleccione ciudad..."                          
+                  md-selected-item-change="setCiudad(ciudad.id)"      
+                   md-min-length="0"              
+                 >
+              <md-item-template>
+                <span
+                    md-highlight-text="ciudad.searchText.nombre"
+                    md-highlight-flags="i">
+                      {{ciudad.nombre}}                       
+                </span>
+              </md-item-template>2
+            </md-autocomplete>
+            </md-input-container>
             
-            <legend>Datos de contacto del punto de entrega</legend>
-              <div layout="row" >
-                  <div layout="column" style="width: 50%;">
-                    <md-input-container class="md-block" flex-gt-sm>
-                      <label>ciudad</label>
-                       <!--  autocompletar de ciudad -->                      
-                      <md-autocomplete style="width: 100%"
-                          md-selected-item="ciudad.selectedItem"
-                          md-search-text="ciudad.searchText.nombre"
-                          md-items="ciudad in  ciudades | filter:ciudad.searchText.nombre" 
-                          md-item-text="ciudad.nombre"                         
-                          placeholder="Seleccione ciudad..."                          
-                          md-selected-item-change="setCiudad(ciudad.id)"      
-                           md-min-length="0"              
-                         >
-                      <md-item-template>
-                        <span
-                            md-highlight-text="ciudad.searchText.nombre"
-                            md-highlight-flags="i">
-                              {{ciudad.nombre}}                       
-                        </span>
-                      </md-item-template>2
-                    </md-autocomplete>
-                    </md-input-container>
-                    
-                   
-                    <br>
-                    <!-- campo de direccion -->
-                    <md-input-container class="md-block" flex-gt-sm>
-                      <label>Direccion</label>
-                      <input   ng-model="jsonDestinoOrigen.direccion" >
-                    </md-input-container>
+           
+            <br>
+            <!-- campo de direccion -->
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Direccion</label>
+              <input   ng-model="jsonDestinoOrigen.direccion" >
+            </md-input-container>
 
-                    <!-- campo de indicaciones -->
-                    <md-input-container class="md-block" flex-gt-sm>
-                      <label>Indicaciones</label>
-                      <input   ng-model="jsonDestinoOrigen.indicaciones" >
-                    </md-input-container>      
-                  </div>
-                  <div layout="column" style="width: 50%;">
-                       <!-- campo de Nombres -->
-                        <md-input-container class="md-block" flex-gt-sm>
-                          <md-icon md-svg-src="img/contacto.svg" class="email"></md-icon>
-                          <label>Nombres</label>
-                          <input   ng-model="jsonDestinoOrigen.nombres" >
-                        </md-input-container>
+            <!-- campo de indicaciones -->
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Indicaciones</label>
+              <input   ng-model="jsonDestinoOrigen.indicaciones" >
+            </md-input-container>
+            <fieldset class="standard" >
+              <legend>Datos de contacto</legend>
+              
+              <!-- campo de Nombres -->
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Nombres</label>
+                <input   ng-model="jsonDestinoOrigen.nombres" >
+              </md-input-container>
 
-                          <!-- campo de email -->
-                        <md-input-container class="md-block" flex-gt-sm>
-                          <md-icon md-svg-src="img/email.svg" class="email"></md-icon>
-                          <label>Email</label>
-                          <input   ng-model="jsonDestinoOrigen.email" >
-                        </md-input-container>
+                <!-- campo de email -->
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Email</label>
+                <input   ng-model="jsonDestinoOrigen.email" >
+              </md-input-container>
 
-                         <!-- campo de  telefono -->
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <md-icon md-svg-src="img/telefono.svg" class="email"></md-icon>
-                          <label>Telefono</label>
-                          <input   ng-model="jsonDestinoOrigen.telefono" >
-                        </md-input-container>
-                  </div>
-
-              </div>
+               <!-- campo de  telefono -->
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Telefono</label>
+                <input   ng-model="jsonDestinoOrigen.telefono" >
+              </md-input-container>
             </fieldset>
 
-              
-            
 
       </md-content>                       
     </md-dialog-content>
